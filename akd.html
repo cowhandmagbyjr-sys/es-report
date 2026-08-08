@@ -1,0 +1,363 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2715%27%20fill%3D%27%231f222e%27/%3E%3Ctext%20x%3D%2732%27%20y%3D%2743%27%20font-family%3D%27Arial%2CHelvetica%2Csans-serif%27%20font-size%3D%2726%27%20font-weight%3D%27400%27%20letter-spacing%3D%271%27%20text-anchor%3D%27middle%27%20fill%3D%27%23ffffff%27%3EA%3C/text%3E%3C/svg%3E"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/misans@4.1.0/lib/Normal/MiSans-Light.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/misans@4.1.0/lib/Normal/MiSans-Regular.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/misans@4.1.0/lib/Normal/MiSans-Medium.min.css"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><title>澳康达二手车行情</title><style>
+:root{
+  color-scheme: light;
+  --page:#f5f6f8; --surface:#ffffff;
+  --ink:#111216; --ink2:#565961; --muted:#8a8d94;
+  --grid:#e7e8eb; --axis:#c9cbd1; --border:rgba(17,18,22,.09);
+  --pill:#f1f2f5; --slider:#1f222e;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --good:#0ca30c; --bad:#d03b3b;
+  --bar:rgba(255,255,255,.72);
+  --mi-good:#0a8f2f; --mi-warn:#b3760a; --mi-serious:#cf5a26; --mi-crit:#c62f2f;
+}
+
+@font-face{font-family:'Inter';
+  src:url('fonts/inter.woff2') format('woff2');
+  font-weight:100 900;font-style:normal;font-display:swap}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--page);color:var(--ink);
+  font:330 100%/1.55 'MiSans','Inter',-apple-system,system-ui,"PingFang SC","Microsoft YaHei","Segoe UI",Arial,sans-serif;
+  letter-spacing:0;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.wrap{max-width:1160px;margin:0 auto;padding:20px 20px 72px}
+.brandnav{display:inline-flex;gap:4px;background:var(--pill);border-radius:11px;padding:3px;margin:2px 0 16px}
+.brandnav a,.brandnav .cur{font-size:.82rem;font-weight:330;padding:7px 15px;border-radius:8px;
+  color:var(--ink2);text-decoration:none;transition:color .2s,background .2s}
+.brandnav a:hover{color:var(--ink)}
+.brandnav .cur{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.masthead{padding:6px 0 2px}
+.eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.09em;color:var(--muted);margin-bottom:9px}
+h1{font-size:clamp(1.6rem,5vw,2.1rem);line-height:1.05;letter-spacing:-.024em;font-weight:700;margin:0}
+h2{font-size:clamp(1.02rem,2.4vw,1.2rem);line-height:1.2;letter-spacing:-.012em;font-weight:650;margin:34px 0 12px}
+.sub{color:var(--ink2);font-size:.86rem;margin:0 0 8px}
+a{color:var(--s1);text-decoration:none}
+
+.topbar{position:sticky;top:0;z-index:30;margin:0 -20px 18px;padding:10px 20px;background:var(--bar);
+  backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--border)}
+.seg{display:inline-flex;background:var(--pill);border-radius:13px;padding:3px;gap:2px;max-width:100%}
+.seg .tab{flex:1;white-space:nowrap;font:inherit;font-size:.86rem;font-weight:600;padding:9px 18px;min-height:40px;
+  border:none;background:none;color:var(--ink2);border-radius:10px;cursor:pointer;
+  transition:background .25s cubic-bezier(.2,.7,.2,1),color .2s,box-shadow .25s,transform .12s}
+.seg .tab.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12),0 0 1px rgba(0,0,0,.1)}
+.seg .tab:active{transform:scale(.97)}
+.showmore{display:block;margin:18px auto 0;padding:12px 28px;min-height:44px;border-radius:999px;
+  border:1px solid var(--border);background:var(--surface);color:var(--s1);font:inherit;font-weight:600;
+  font-size:.9rem;cursor:pointer;transition:background .2s,transform .12s}
+.showmore:hover{background:var(--pill)}
+.showmore:active{transform:scale(.97)}
+.view{display:none}
+.view.active{display:block}
+
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:14px 0 6px}
+.tile{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:15px 17px}
+.tile .k{color:var(--ink2);font-size:.78rem}
+.tile .v{font-size:1.5rem;font-weight:250;letter-spacing:0;margin-top:4px;font-variant-numeric:tabular-nums}
+.tile .d{font-size:.78rem;margin-top:3px}
+.up{color:var(--bad)} .down{color:var(--good)} .flat{color:var(--muted)}
+
+.trendtabs{display:inline-flex;gap:2px;background:var(--pill);border-radius:9px;padding:2px;margin:20px 0 2px}
+.gbtn{font:inherit;font-size:.78rem;font-weight:330;padding:6px 13px;border:none;background:none;
+  color:var(--ink2);border-radius:7px;cursor:pointer;transition:background .2s,color .2s}
+.gbtn.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.gran{display:none}
+.gran.active{display:block}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;margin:10px 0;overflow-x:auto}
+.chart{width:100%;height:auto;display:block}
+.lc{position:relative}
+.lc-axis{position:absolute;left:0;top:0;z-index:2;background:var(--surface);display:block}
+.lc-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.lc-plot{display:block;touch-action:pan-x}
+.xline{stroke:var(--muted);stroke-width:1;stroke-dasharray:4 3;pointer-events:none}
+.xdot{fill:var(--s1);stroke:var(--surface);stroke-width:2;pointer-events:none}
+.xread{fill:var(--ink);font-size:12px;font-variant-numeric:tabular-nums;pointer-events:none}
+.grid{stroke:var(--grid);stroke-width:1}
+.line-s1{fill:none;stroke:var(--s1);stroke-width:2}
+.dot-s1{fill:var(--s1);stroke:var(--surface);stroke-width:1.5}
+text.tick{fill:var(--muted)} text.val{fill:var(--ink2);font-variant-numeric:tabular-nums}
+text.axname{fill:var(--ink2)} text.lbl{fill:var(--ink2)}
+
+table{width:100%;border-collapse:collapse;font-size:.83rem}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border)}
+th{color:var(--ink2);font-weight:600}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:10px 0}
+@media(min-width:520px){.cards{grid-template-columns:repeat(3,1fr);gap:14px}}
+@media(min-width:760px){.cards{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:1000px){.cards{grid-template-columns:repeat(5,1fr);gap:16px}}
+.pcard{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);
+  border-radius:18px;overflow:hidden;color:inherit;
+  transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s;will-change:transform}
+.pcard:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(0,0,0,.16)}
+.pcard:active{transform:scale(.985)}
+.pcard-img{position:relative;aspect-ratio:4/3;background:var(--grid);overflow:hidden}
+.pcard-img img{width:100%;height:100%;object-fit:cover;display:block}
+.pcard-color{position:absolute;left:8px;top:8px;display:inline-flex;align-items:center;gap:5px;
+  padding:4px 10px 4px 7px;border-radius:999px;background:rgba(255,255,255,.82);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  font-size:.72rem;font-weight:600;color:#1a1a1a;box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.pcard-color .dot{width:11px;height:11px;border-radius:50%;border:1px solid rgba(0,0,0,.18);flex:none}
+.pcard-b{padding:13px 15px 15px;display:flex;flex-direction:column;flex:1}
+.pcard-price{font-size:1.3rem;font-weight:250;letter-spacing:0;font-variant-numeric:tabular-nums}
+.pcard-title{margin-top:4px;font-size:.9rem;color:var(--ink2);font-weight:330}
+.pcard-meta{margin-top:8px;font-size:.82rem;color:var(--ink2);display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}
+.pcard-shop{margin-top:auto;padding-top:9px;font-size:.78rem;color:var(--muted)}
+.mi{font-weight:650;font-variant-numeric:tabular-nums}
+.mi-good{color:var(--mi-good)} .mi-warn{color:var(--mi-warn)}
+.mi-serious{color:var(--mi-serious)} .mi-crit{color:var(--mi-crit)}
+
+.filters{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px 16px;
+  margin:6px 0 14px;display:flex;flex-direction:column;gap:14px}
+.frow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flabel{font-size:.78rem;color:var(--ink2);min-width:42px}
+.chip{font:inherit;font-size:.8rem;padding:7px 14px;min-height:36px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--border);background:var(--page);color:var(--ink2);
+  transition:transform .2s,background .2s,color .2s,border-color .2s}
+.chip:active{transform:scale(.95)}
+.chip.on{background:var(--s1);color:#fff;border-color:var(--s1)}
+.fcount{font-size:.8rem;color:var(--ink2);margin-left:auto}
+.fcount b{color:var(--ink);font-variant-numeric:tabular-nums}
+.freset{cursor:pointer;color:var(--s1);font-size:.8rem;background:none;border:none;font:inherit;padding:6px}
+
+.sliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px 28px}
+.rng-top{display:flex;align-items:center;gap:12px}
+.rng-name{font-size:.82rem;color:var(--ink2);min-width:32px}
+.rng-track{position:relative;height:26px;flex:1}
+.rng-rail{position:absolute;top:11px;left:0;right:0;height:4px;border-radius:2px;background:var(--grid)}
+.rng-fill{position:absolute;top:11px;height:4px;border-radius:2px;background:var(--slider)}
+.rng input[type=range]{-webkit-appearance:none;appearance:none;position:absolute;top:0;left:0;width:100%;
+  height:26px;margin:0;background:none;pointer-events:none}
+.rng input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;
+  border-radius:6px;background:var(--slider);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.32);
+  cursor:pointer;pointer-events:auto}
+.rng input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:6px;background:var(--slider);
+  border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.32);cursor:pointer;pointer-events:auto}
+.rng-vals{display:flex;align-items:center;gap:10px;margin-top:12px}
+.rng-pill{flex:1;background:var(--pill);border-radius:12px;padding:11px 8px;text-align:center;
+  font-size:.85rem;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rng-dash{width:14px;height:2px;background:var(--axis);flex:none}
+.swatches{display:flex;flex-wrap:wrap;gap:14px}
+.sw{display:flex;flex-direction:column;align-items:center;gap:6px;border:none;background:none;padding:0;cursor:pointer;font:inherit}
+.sw-c{width:46px;height:46px;border-radius:13px;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.14);
+  outline:2.5px solid transparent;outline-offset:2px;transition:transform .2s,box-shadow .2s,outline-color .2s}
+.sw-n{font-size:.76rem;color:var(--ink2)}
+.sw:hover .sw-c{transform:translateY(-2px)}
+.sw:active .sw-c{transform:scale(.93)}
+.sw.on .sw-c{outline-color:var(--slider);box-shadow:0 4px 12px rgba(0,0,0,.22)}
+.sw.on .sw-n{color:var(--ink);font-weight:650}
+
+.empty{color:var(--muted);font-size:.83rem;padding:22px;text-align:center}
+.legend{font-size:.78rem;color:var(--ink2);margin:2px 0 10px}
+.foot{color:var(--muted);font-size:.78rem;margin-top:44px;line-height:1.6}
+
+@media (max-width:560px){
+  .wrap{padding:16px 12px 60px}
+  .topbar{margin:0 -12px 16px;padding:10px 12px}
+  .seg{display:flex}
+  .pcard-b{padding:10px 11px 12px}
+  .pcard-price{font-size:1.06rem}
+  .pcard-title{font-size:.85rem}
+  .pcard-meta{font-size:.76rem}
+}
+.toTop{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:40;
+  width:46px;height:46px;border-radius:50%;border:1px solid var(--border);background:var(--bar);
+  backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  color:var(--ink);font-size:1.25rem;line-height:1;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.18);
+  opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .25s,transform .25s}
+.toTop.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+@media (prefers-reduced-motion: reduce){
+  *{transition-duration:.001ms!important}
+  .pcard:hover{transform:none}
+}
+@media (prefers-reduced-transparency: reduce){
+  .topbar{background:var(--page);backdrop-filter:none;-webkit-backdrop-filter:none}
+}
+</style></head><body><div class="wrap"><div class="brandnav"><a href="index.html">雷克萨斯</a><a href="tesla.html">特斯拉</a><span class="cur">澳康达</span></div><div class="masthead"><div class="eyebrow">AKD 澳康达精品二手车</div><h1>澳康达二手车 · 行情走势</h1></div><div class="topbar"><div class="seg"><button class="tab active" data-view="bmw5">宝马5系</button><button class="tab" data-view="p911">保时捷911</button></div></div><div class="view active" id="view-bmw5">
+    <p class="sub">筛选：澳康达 · 宝马5系 · 20万以下　·　最新快照 2026-08-08 20:18　·　共 1 次快照　·　数据源 akd.cn</p>
+    <div class="tiles"><div class="tile"><div class="k">在售数量</div><div class="v">14</div><div class="d flat">首次快照</div></div><div class="tile"><div class="k">均价</div><div class="v">¥143,571</div><div class="d flat">首次快照</div></div><div class="tile"><div class="k">中位价</div><div class="v">¥153,000</div><div class="d flat">首次快照</div></div><div class="tile"><div class="k">最低价</div><div class="v">¥68,000</div><div class="d flat">首次快照</div></div></div>
+
+    <div class="trendbox">
+    
+    <h2>中位价走势</h2>
+    <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">14.9万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">15.1万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">15.3万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">15.5万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">15.7万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[542, 136.0, "15.3万", "08-08"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="542.0,136.0" class="line-s1"/><circle cx="542.0" cy="136.0" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">08-08</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
+    <h2>在售数量走势</h2>
+    <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">14</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">14</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">14</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">14</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">14</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">在售数量</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[542, 136.0, "14", "08-08"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="542.0,136.0" class="line-s1"/><circle cx="542.0" cy="136.0" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">08-08</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
+    </div>
+
+    <h2>价格分布（最新，单位：万元）</h2>
+    <div class="legend">已排除单价 &gt; 300万 的录入异常</div>
+    <div class="card"><svg viewBox="0 0 760 300" class="chart" role="img"><line x1="44" y1="256.0" x2="744" y2="256.0" class="grid"/><text x="38.0" y="260.0" text-anchor="end" class="tick" font-size="10">0</text><line x1="44" y1="177.3" x2="744" y2="177.3" class="grid"/><text x="38.0" y="181.3" text-anchor="end" class="tick" font-size="10">2</text><line x1="44" y1="98.7" x2="744" y2="98.7" class="grid"/><text x="38.0" y="102.7" text-anchor="end" class="tick" font-size="10">3</text><line x1="44" y1="20.0" x2="744" y2="20.0" class="grid"/><text x="38.0" y="24.0" text-anchor="end" class="tick" font-size="10">5</text><rect x="51.0" y="208.8" width="44.3" height="47.2" rx="4" fill="var(--s1)"><title>6-7: 1 辆</title></rect><text x="73.2" y="202.8" text-anchor="middle" class="val" font-size="10">1</text><text x="73.2" y="274.0" text-anchor="middle" class="tick" font-size="10">6-7</text><rect x="109.3" y="256.0" width="44.3" height="0.5" rx="4" fill="var(--s1)"><title>7-8: 0 辆</title></rect><text x="131.5" y="274.0" text-anchor="middle" class="tick" font-size="10">7-8</text><rect x="167.7" y="256.0" width="44.3" height="0.5" rx="4" fill="var(--s1)"><title>8-9: 0 辆</title></rect><text x="189.8" y="274.0" text-anchor="middle" class="tick" font-size="10">8-9</text><rect x="226.0" y="256.0" width="44.3" height="0.5" rx="4" fill="var(--s1)"><title>9-10: 0 辆</title></rect><text x="248.2" y="274.0" text-anchor="middle" class="tick" font-size="10">9-10</text><rect x="284.3" y="208.8" width="44.3" height="47.2" rx="4" fill="var(--s1)"><title>10-11: 1 辆</title></rect><text x="306.5" y="202.8" text-anchor="middle" class="val" font-size="10">1</text><text x="306.5" y="274.0" text-anchor="middle" class="tick" font-size="10">10-11</text><rect x="342.7" y="256.0" width="44.3" height="0.5" rx="4" fill="var(--s1)"><title>11-12: 0 辆</title></rect><text x="364.8" y="274.0" text-anchor="middle" class="tick" font-size="10">11-12</text><rect x="401.0" y="256.0" width="44.3" height="0.5" rx="4" fill="var(--s1)"><title>12-13: 0 辆</title></rect><text x="423.2" y="274.0" text-anchor="middle" class="tick" font-size="10">12-13</text><rect x="459.3" y="161.6" width="44.3" height="94.4" rx="4" fill="var(--s1)"><title>13-14: 2 辆</title></rect><text x="481.5" y="155.6" text-anchor="middle" class="val" font-size="10">2</text><text x="481.5" y="274.0" text-anchor="middle" class="tick" font-size="10">13-14</text><rect x="517.7" y="161.6" width="44.3" height="94.4" rx="4" fill="var(--s1)"><title>14-15: 2 辆</title></rect><text x="539.8" y="155.6" text-anchor="middle" class="val" font-size="10">2</text><text x="539.8" y="274.0" text-anchor="middle" class="tick" font-size="10">14-15</text><rect x="576.0" y="20.0" width="44.3" height="236.0" rx="4" fill="var(--s1)"><title>15-16: 5 辆</title></rect><text x="598.2" y="14.0" text-anchor="middle" class="val" font-size="10">5</text><text x="598.2" y="274.0" text-anchor="middle" class="tick" font-size="10">15-16</text><rect x="634.3" y="256.0" width="44.3" height="0.5" rx="4" fill="var(--s1)"><title>16-17: 0 辆</title></rect><text x="656.5" y="274.0" text-anchor="middle" class="tick" font-size="10">16-17</text><rect x="692.7" y="114.4" width="44.3" height="141.6" rx="4" fill="var(--s1)"><title>17-18: 3 辆</title></rect><text x="714.8" y="108.4" text-anchor="middle" class="val" font-size="10">3</text><text x="714.8" y="274.0" text-anchor="middle" class="tick" font-size="10">17-18</text></svg></div>
+
+    <h2>在售数量 TOP 城市</h2>
+    <div class="card"><svg viewBox="0 0 760 106" class="chart" role="img"><text x="112.0" y="27.0" text-anchor="end" class="tick" font-size="12">深圳</text><rect x="120" y="13.0" width="576.0" height="18" rx="4" fill="var(--s1)"><title>深圳: 10</title></rect><text x="704.0" y="27.0" text-anchor="start" class="val" font-size="12">10</text><text x="112.0" y="57.0" text-anchor="end" class="tick" font-size="12">成都</text><rect x="120" y="43.0" width="115.2" height="18" rx="4" fill="var(--s1)"><title>成都: 2</title></rect><text x="243.2" y="57.0" text-anchor="start" class="val" font-size="12">2</text><text x="112.0" y="87.0" text-anchor="end" class="tick" font-size="12">上海</text><rect x="120" y="73.0" width="115.2" height="18" rx="4" fill="var(--s1)"><title>上海: 2</title></rect><text x="243.2" y="87.0" text-anchor="start" class="val" font-size="12">2</text></svg></div>
+
+    <h2>车龄 vs 售价（≤300万）</h2>
+    <div class="card"><svg viewBox="0 0 760 340" class="chart" role="img"><line x1="56" y1="294.0" x2="742" y2="294.0" class="grid"/><text x="50.0" y="298.0" text-anchor="end" class="tick" font-size="10">6.8万</text><line x1="56" y1="202.0" x2="742" y2="202.0" class="grid"/><text x="50.0" y="206.0" text-anchor="end" class="tick" font-size="10">10.5万</text><line x1="56" y1="110.0" x2="742" y2="110.0" class="grid"/><text x="50.0" y="114.0" text-anchor="end" class="tick" font-size="10">14.1万</text><line x1="56" y1="18.0" x2="742" y2="18.0" class="grid"/><text x="50.0" y="22.0" text-anchor="end" class="tick" font-size="10">17.8万</text><text x="56.0" y="312.0" text-anchor="middle" class="tick" font-size="10">0.5</text><text x="227.5" y="312.0" text-anchor="middle" class="tick" font-size="10">4.6</text><text x="399.0" y="312.0" text-anchor="middle" class="tick" font-size="10">8.7</text><text x="570.5" y="312.0" text-anchor="middle" class="tick" font-size="10">12.7</text><text x="742.0" y="312.0" text-anchor="middle" class="tick" font-size="10">16.8</text><circle cx="742.0" cy="294.0" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>宝马520Li 领先型 · 成都 · 16.8年 · ¥68,000</title></circle><circle cx="283.3" cy="68.2" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>宝马530Li 领先型 豪华套装 · 深圳 · 5.9年 · ¥158,000</title></circle><circle cx="291.7" cy="18.0" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>宝马530Li 尊享型 M运动套装 · 深圳 · 6.1年 · ¥178,000</title></circle><circle cx="396.9" cy="105.8" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>宝马530Li 领先型豪华套装 · 深圳 · 8.6年 · ¥143,000</title></circle><circle cx="182.3" cy="30.5" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>宝马525i 改款二 M运动套装 · 成都 · 3.5年 · ¥173,000</title></circle><circle cx="56.0" cy="38.1" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>蔚来ES6 100kWh · 深圳 · 0.5年 · ¥170,000</title></circle><circle cx="338.0" cy="68.2" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>宝马530Li 尊享型 豪华套装 · 上海 · 7.2年 · ¥158,000</title></circle><circle cx="338.0" cy="80.7" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>宝马530Li 领先型 M运动套装 · 深圳 · 7.2年 · ¥153,000</title></circle><circle cx="380.1" cy="80.7" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>宝马530Li 改款 尊享型 豪华套装 · 深圳 · 8.2年 · ¥153,000</title></circle><circle cx="426.4" cy="206.2" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>宝马525Li 豪华设计套装 · 深圳 · 9.3年 · ¥103,000</title></circle><circle cx="312.7" cy="113.3" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>宝马530Li 尊享型 豪华套装 · 深圳 · 6.6年 · ¥140,000</title></circle><circle cx="329.6" cy="138.4" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>宝马530Li 改款尊享型豪华套装 · 上海 · 7.0年 · ¥130,000</title></circle><circle cx="283.3" cy="138.4" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>宝马530Li 领先型 豪华套装 · 深圳 · 5.9年 · ¥130,000</title></circle><circle cx="321.1" cy="80.7" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>宝马530Li 尊享型M运动套装 · 深圳 · 6.8年 · ¥153,000</title></circle><text x="742.0" y="334.0" text-anchor="end" class="axname" font-size="11">车龄(年)</text><text x="10.0" y="22.0" text-anchor="start" class="axname" font-size="11">售价</text></svg></div>
+
+    <h2>车型行情一览</h2>
+    <div class="card"><table><tr><th>车型</th><th class="num">在售</th>
+      <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
+      <tr><td>宝马530Li 领先型</td><td class="num">3</td><td class="num">¥130,000</td><td class="num">¥153,000</td><td class="num">¥158,000</td></tr><tr><td>宝马530Li 尊享型</td><td class="num">3</td><td class="num">¥140,000</td><td class="num">¥158,000</td><td class="num">¥178,000</td></tr><tr><td>宝马520Li 领先型</td><td class="num">1</td><td class="num">¥68,000</td><td class="num">¥68,000</td><td class="num">¥68,000</td></tr><tr><td>宝马530Li 领先型豪华套装</td><td class="num">1</td><td class="num">¥143,000</td><td class="num">¥143,000</td><td class="num">¥143,000</td></tr><tr><td>宝马525i 改款二</td><td class="num">1</td><td class="num">¥173,000</td><td class="num">¥173,000</td><td class="num">¥173,000</td></tr><tr><td>蔚来ES6 100kWh</td><td class="num">1</td><td class="num">¥170,000</td><td class="num">¥170,000</td><td class="num">¥170,000</td></tr><tr><td>宝马530Li 改款</td><td class="num">1</td><td class="num">¥153,000</td><td class="num">¥153,000</td><td class="num">¥153,000</td></tr><tr><td>宝马525Li 豪华设计套装</td><td class="num">1</td><td class="num">¥103,000</td><td class="num">¥103,000</td><td class="num">¥103,000</td></tr><tr><td>宝马530Li 改款尊享型豪华套装</td><td class="num">1</td><td class="num">¥130,000</td><td class="num">¥130,000</td><td class="num">¥130,000</td></tr><tr><td>宝马530Li 尊享型M运动套装</td><td class="num">1</td><td class="num">¥153,000</td><td class="num">¥153,000</td><td class="num">¥153,000</td></tr></table></div>
+
+    <h2>快照对比</h2><p class="empty">这是第一次快照。再运行一次 track（建议隔天或定时）即可看到降价/新增/售出的逐辆对比。</p>
+
+    <h2>在售列表 · 价格从低到高</h2><div class="legend">共 14 辆，点卡片跳转官网详情；里程颜色越深＝公里数越大。</div><div class="filters" data-target="cards-bmw5"><div class="frow"><span class="flabel">车型</span><button class="chip" data-group="model" data-value="宝马520Li 领先型">宝马520Li 领先型</button><button class="chip" data-group="model" data-value="宝马525Li 豪华设计套装">宝马525Li 豪华设计套装</button><button class="chip" data-group="model" data-value="宝马525i 改款二">宝马525i 改款二</button><button class="chip" data-group="model" data-value="宝马530Li 尊享型">宝马530Li 尊享型</button><button class="chip" data-group="model" data-value="宝马530Li 尊享型M运动套装">宝马530Li 尊享型M运动套装</button><button class="chip" data-group="model" data-value="宝马530Li 改款">宝马530Li 改款</button><button class="chip" data-group="model" data-value="宝马530Li 改款尊享型豪华套装">宝马530Li 改款尊享型豪华套装</button><button class="chip" data-group="model" data-value="宝马530Li 领先型">宝马530Li 领先型</button><button class="chip" data-group="model" data-value="宝马530Li 领先型豪华套装">宝马530Li 领先型豪华套装</button><button class="chip" data-group="model" data-value="蔚来ES6 100kWh">蔚来ES6 100kWh</button></div><div class="sliders"><div class="rng" data-field="price" data-format="price" data-min="0" data-max="180000"><div class="rng-top"><span class="rng-name">价格</span><div class="rng-track"><div class="rng-rail"></div><div class="rng-fill"></div><input type="range" data-role="min" min="0" max="180000" step="5000" value="0"><input type="range" data-role="max" min="0" max="180000" step="5000" value="180000"></div></div><div class="rng-vals"><div class="rng-pill rmin"></div><span class="rng-dash"></span><div class="rng-pill rmax"></div></div></div><div class="rng" data-field="mileage" data-format="km" data-min="0" data-max="120000"><div class="rng-top"><span class="rng-name">里程</span><div class="rng-track"><div class="rng-rail"></div><div class="rng-fill"></div><input type="range" data-role="min" min="0" max="120000" step="1000" value="0"><input type="range" data-role="max" min="0" max="120000" step="1000" value="120000"></div></div><div class="rng-vals"><div class="rng-pill rmin"></div><span class="rng-dash"></span><div class="rng-pill rmax"></div></div></div><div class="rng" data-field="age" data-format="age" data-min="0" data-max="15"><div class="rng-top"><span class="rng-name">车龄</span><div class="rng-track"><div class="rng-rail"></div><div class="rng-fill"></div><input type="range" data-role="min" min="0" max="15" step="1" value="0"><input type="range" data-role="max" min="0" max="15" step="1" value="15"></div></div><div class="rng-vals"><div class="rng-pill rmin"></div><span class="rng-dash"></span><div class="rng-pill rmax"></div></div></div></div><div class="frow"><span class="fcount">显示 <b>14</b> / 14 辆</span><button class="freset">重置筛选</button></div></div><div class="cards" id="cards-bmw5" data-limit="0" data-expanded="0"><a class="pcard" href="https://m.akd.cn/car/697502/" target="_blank" data-model="宝马520Li 领先型" data-oil="" data-color="" data-price="68000" data-mileage="50116" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2025/10/13/f1baf39611f94828a4e6bcf080811f47.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥68,000</div><div class="pcard-title">宝马520Li 领先型</div><div class="pcard-meta"><span class="mi mi-warn">5.0万km</span><span>2009.10上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/711487/" target="_blank" data-model="宝马525Li 豪华设计套装" data-oil="" data-color="" data-price="103000" data-mileage="65815" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/07/04/a13c1a4d6dc4460297fd6e6091271b64.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥103,000</div><div class="pcard-title">宝马525Li 豪华设计套装</div><div class="pcard-meta"><span class="mi mi-warn">6.6万km</span><span>2017.04上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/712877/" target="_blank" data-model="宝马530Li 改款尊享型豪华套装" data-oil="" data-color="" data-price="130000" data-mileage="91740" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/08/03/9d133fb3b59b4b82bd25195fc7fe57cc.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥130,000</div><div class="pcard-title">宝马530Li 改款尊享型豪华套装</div><div class="pcard-meta"><span class="mi mi-serious">9.2万km</span><span>2019.08上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/713077/" target="_blank" data-model="宝马530Li 领先型" data-oil="" data-color="" data-price="130000" data-mileage="107318" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/07/31/449da837a1d64ff79d01eee051e30379.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥130,000</div><div class="pcard-title">宝马530Li 领先型 豪华套装</div><div class="pcard-meta"><span class="mi mi-serious">10.7万km</span><span>2020.09上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/712250/" target="_blank" data-model="宝马530Li 尊享型" data-oil="" data-color="" data-price="140000" data-mileage="116748" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/07/25/6af25bd23d824bf5b5397cdc4d6b26bb.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥140,000</div><div class="pcard-title">宝马530Li 尊享型 豪华套装</div><div class="pcard-meta"><span class="mi mi-crit">11.7万km</span><span>2020.01上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/708695/" target="_blank" data-model="宝马530Li 领先型豪华套装" data-oil="" data-color="" data-price="143000" data-mileage="54576" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/04/28/8c319c0799d34a26bbef339141a7e710.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥143,000</div><div class="pcard-title">宝马530Li 领先型豪华套装</div><div class="pcard-meta"><span class="mi mi-warn">5.5万km</span><span>2018.01上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/710110/" target="_blank" data-model="宝马530Li 领先型" data-oil="" data-color="" data-price="153000" data-mileage="62700" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/06/10/ff1b4fc591644889b5a7dde30c767478.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥153,000</div><div class="pcard-title">宝马530Li 领先型 M运动套装</div><div class="pcard-meta"><span class="mi mi-warn">6.3万km</span><span>2019.06上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/710197/" target="_blank" data-model="宝马530Li 改款" data-oil="" data-color="" data-price="153000" data-mileage="41896" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/06/06/3da90fc460584779b8f1442ae46324a7.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥153,000</div><div class="pcard-title">宝马530Li 改款 尊享型 豪华套装</div><div class="pcard-meta"><span class="mi mi-warn">4.2万km</span><span>2018.05上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/713166/" target="_blank" data-model="宝马530Li 尊享型M运动套装" data-oil="" data-color="" data-price="153000" data-mileage="97818" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/08/02/af6450a29871437f8db95c075e74bdd0.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥153,000</div><div class="pcard-title">宝马530Li 尊享型M运动套装</div><div class="pcard-meta"><span class="mi mi-serious">9.8万km</span><span>2019.10上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/707627/" target="_blank" data-model="宝马530Li 领先型" data-oil="" data-color="" data-price="158000" data-mileage="50378" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/04/11/dadf1416e7ab457e8055a6aa82c0c23b.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥158,000</div><div class="pcard-title">宝马530Li 领先型 豪华套装</div><div class="pcard-meta"><span class="mi mi-warn">5.0万km</span><span>2020.09上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/709651/" target="_blank" data-model="宝马530Li 尊享型" data-oil="" data-color="" data-price="158000" data-mileage="58198" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/05/30/c4ad484aa47f458db943e2196c722719.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥158,000</div><div class="pcard-title">宝马530Li 尊享型 豪华套装</div><div class="pcard-meta"><span class="mi mi-warn">5.8万km</span><span>2019.05上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/709540/" target="_blank" data-model="蔚来ES6 100kWh" data-oil="" data-color="" data-price="170000" data-mileage="17458" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/05/17/98bc017a61f6472ca7c4c351d68c21e4.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥170,000</div><div class="pcard-title">蔚来ES6 100kWh</div><div class="pcard-meta"><span class="mi mi-good">1.7万km</span><span>2026.02上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/709512/" target="_blank" data-model="宝马525i 改款二" data-oil="" data-color="" data-price="173000" data-mileage="58340" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/05/16/6a422b54893a49d6b043fe24db203e55.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥173,000</div><div class="pcard-title">宝马525i 改款二 M运动套装</div><div class="pcard-meta"><span class="mi mi-warn">5.8万km</span><span>2023.02上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/708290/" target="_blank" data-model="宝马530Li 尊享型" data-oil="" data-color="" data-price="178000" data-mileage="53787" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/04/25/8e56a8761b084b7ebe61a6d493ba0da5.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥178,000</div><div class="pcard-title">宝马530Li 尊享型 M运动套装</div><div class="pcard-meta"><span class="mi mi-warn">5.4万km</span><span>2020.07上牌</span></div><div class="pcard-shop">澳康达</div></div></a></div>
+    </div><div class="view" id="view-p911">
+    <p class="sub">筛选：澳康达 · 保时捷911　·　最新快照 2026-08-08 20:18　·　共 1 次快照　·　数据源 akd.cn</p>
+    <div class="tiles"><div class="tile"><div class="k">在售数量</div><div class="v">12</div><div class="d flat">首次快照</div></div><div class="tile"><div class="k">均价</div><div class="v">¥780,272</div><div class="d flat">首次快照</div></div><div class="tile"><div class="k">中位价</div><div class="v">¥760,000</div><div class="d flat">首次快照</div></div><div class="tile"><div class="k">最低价</div><div class="v">¥478,000</div><div class="d flat">首次快照</div></div></div>
+
+    <div class="trendbox">
+    
+    <h2>中位价走势</h2>
+    <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">74.1万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">75.1万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">76.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">76.9万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">77.9万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[542, 136.0, "76.0万", "08-08"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="542.0,136.0" class="line-s1"/><circle cx="542.0" cy="136.0" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">08-08</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
+    <h2>在售数量走势</h2>
+    <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">12</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">12</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">12</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">12</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">12</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">在售数量</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[542, 136.0, "12", "08-08"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="542.0,136.0" class="line-s1"/><circle cx="542.0" cy="136.0" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">08-08</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
+    </div>
+
+    <h2>价格分布（最新，单位：万元）</h2>
+    <div class="legend">已排除单价 &gt; 300万 的录入异常</div>
+    <div class="card"><svg viewBox="0 0 760 300" class="chart" role="img"><line x1="44" y1="256.0" x2="744" y2="256.0" class="grid"/><text x="38.0" y="260.0" text-anchor="end" class="tick" font-size="10">0</text><line x1="44" y1="177.3" x2="744" y2="177.3" class="grid"/><text x="38.0" y="181.3" text-anchor="end" class="tick" font-size="10">1</text><line x1="44" y1="98.7" x2="744" y2="98.7" class="grid"/><text x="38.0" y="102.7" text-anchor="end" class="tick" font-size="10">3</text><line x1="44" y1="20.0" x2="744" y2="20.0" class="grid"/><text x="38.0" y="24.0" text-anchor="end" class="tick" font-size="10">4</text><rect x="52.4" y="197.0" width="53.2" height="59.0" rx="4" fill="var(--s1)"><title>42-49: 1 辆</title></rect><text x="79.0" y="191.0" text-anchor="middle" class="val" font-size="10">1</text><text x="79.0" y="274.0" text-anchor="middle" class="tick" font-size="10">42-49</text><rect x="122.4" y="197.0" width="53.2" height="59.0" rx="4" fill="var(--s1)"><title>49-56: 1 辆</title></rect><text x="149.0" y="191.0" text-anchor="middle" class="val" font-size="10">1</text><text x="149.0" y="274.0" text-anchor="middle" class="tick" font-size="10">49-56</text><rect x="192.4" y="256.0" width="53.2" height="0.5" rx="4" fill="var(--s1)"><title>56-63: 0 辆</title></rect><text x="219.0" y="274.0" text-anchor="middle" class="tick" font-size="10">56-63</text><rect x="262.4" y="256.0" width="53.2" height="0.5" rx="4" fill="var(--s1)"><title>63-70: 0 辆</title></rect><text x="289.0" y="274.0" text-anchor="middle" class="tick" font-size="10">63-70</text><rect x="332.4" y="20.0" width="53.2" height="236.0" rx="4" fill="var(--s1)"><title>70-77: 4 辆</title></rect><text x="359.0" y="14.0" text-anchor="middle" class="val" font-size="10">4</text><text x="359.0" y="274.0" text-anchor="middle" class="tick" font-size="10">70-77</text><rect x="402.4" y="138.0" width="53.2" height="118.0" rx="4" fill="var(--s1)"><title>77-84: 2 辆</title></rect><text x="429.0" y="132.0" text-anchor="middle" class="val" font-size="10">2</text><text x="429.0" y="274.0" text-anchor="middle" class="tick" font-size="10">77-84</text><rect x="472.4" y="256.0" width="53.2" height="0.5" rx="4" fill="var(--s1)"><title>84-91: 0 辆</title></rect><text x="499.0" y="274.0" text-anchor="middle" class="tick" font-size="10">84-91</text><rect x="542.4" y="197.0" width="53.2" height="59.0" rx="4" fill="var(--s1)"><title>91-98: 1 辆</title></rect><text x="569.0" y="191.0" text-anchor="middle" class="val" font-size="10">1</text><text x="569.0" y="274.0" text-anchor="middle" class="tick" font-size="10">91-98</text><rect x="612.4" y="197.0" width="53.2" height="59.0" rx="4" fill="var(--s1)"><title>98-105: 1 辆</title></rect><text x="639.0" y="191.0" text-anchor="middle" class="val" font-size="10">1</text><text x="639.0" y="274.0" text-anchor="middle" class="tick" font-size="10">98-105</text><rect x="682.4" y="197.0" width="53.2" height="59.0" rx="4" fill="var(--s1)"><title>105-112: 1 辆</title></rect><text x="709.0" y="191.0" text-anchor="middle" class="val" font-size="10">1</text><text x="709.0" y="274.0" text-anchor="middle" class="tick" font-size="10">105-112</text></svg></div>
+
+    <h2>在售数量 TOP 城市</h2>
+    <div class="card"><svg viewBox="0 0 760 136" class="chart" role="img"><text x="112.0" y="27.0" text-anchor="end" class="tick" font-size="12">深圳</text><rect x="120" y="13.0" width="576.0" height="18" rx="4" fill="var(--s1)"><title>深圳: 5</title></rect><text x="704.0" y="27.0" text-anchor="start" class="val" font-size="12">5</text><text x="112.0" y="57.0" text-anchor="end" class="tick" font-size="12">上海</text><rect x="120" y="43.0" width="460.8" height="18" rx="4" fill="var(--s1)"><title>上海: 4</title></rect><text x="588.8" y="57.0" text-anchor="start" class="val" font-size="12">4</text><text x="112.0" y="87.0" text-anchor="end" class="tick" font-size="12">天津</text><rect x="120" y="73.0" width="230.4" height="18" rx="4" fill="var(--s1)"><title>天津: 2</title></rect><text x="358.4" y="87.0" text-anchor="start" class="val" font-size="12">2</text><text x="112.0" y="117.0" text-anchor="end" class="tick" font-size="12">成都</text><rect x="120" y="103.0" width="115.2" height="18" rx="4" fill="var(--s1)"><title>成都: 1</title></rect><text x="243.2" y="117.0" text-anchor="start" class="val" font-size="12">1</text></svg></div>
+
+    <h2>车龄 vs 售价（≤300万）</h2>
+    <div class="card"><svg viewBox="0 0 760 340" class="chart" role="img"><line x1="56" y1="294.0" x2="742" y2="294.0" class="grid"/><text x="50.0" y="298.0" text-anchor="end" class="tick" font-size="10">47.8万</text><line x1="56" y1="202.0" x2="742" y2="202.0" class="grid"/><text x="50.0" y="206.0" text-anchor="end" class="tick" font-size="10">66.9万</text><line x1="56" y1="110.0" x2="742" y2="110.0" class="grid"/><text x="50.0" y="114.0" text-anchor="end" class="tick" font-size="10">85.9万</text><line x1="56" y1="18.0" x2="742" y2="18.0" class="grid"/><text x="50.0" y="22.0" text-anchor="end" class="tick" font-size="10">105.0万</text><text x="56.0" y="312.0" text-anchor="middle" class="tick" font-size="10">2.8</text><text x="227.5" y="312.0" text-anchor="middle" class="tick" font-size="10">4.6</text><text x="399.0" y="312.0" text-anchor="middle" class="tick" font-size="10">6.5</text><text x="570.5" y="312.0" text-anchor="middle" class="tick" font-size="10">8.3</text><text x="742.0" y="312.0" text-anchor="middle" class="tick" font-size="10">10.2</text><circle cx="222.9" cy="168.5" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>保时捷911 Carrera · 深圳 · 4.6年 · ¥738,000</title></circle><circle cx="56.0" cy="66.3" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>保时捷 911 Carrera 3.0T · 深圳 · 2.8年 · ¥950,000</title></circle><circle cx="148.7" cy="122.7" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>保时捷 911 Carrera S 3.0T · 深圳 · 3.8年 · ¥833,000</title></circle><circle cx="278.5" cy="18.0" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>保时捷911 Carrera 4S · 成都 · 5.2年 · ¥1,050,000</title></circle><circle cx="250.7" cy="47.9" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>保时捷 911 Carrera S · 天津 · 4.9年 · ¥988,000</title></circle><circle cx="538.1" cy="294.0" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>保时捷 911 Carrera 3.0T · 天津 · 8.0年 · ¥478,000</title></circle><circle cx="742.0" cy="285.8" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>保时捷911 Carrera Cabriolet · 上海 · 10.2年 · ¥495,000</title></circle><circle cx="269.2" cy="139.6" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>保时捷 911 Carrera 3.0T · 深圳 · 5.1年 · ¥798,000</title></circle><circle cx="343.4" cy="168.5" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>保时捷 911 Carrera  3.0T · 上海 · 5.9年 · ¥738,000</title></circle><circle cx="195.1" cy="157.9" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>保时捷911 Carrera · 深圳 · 4.3年 · ¥760,000</title></circle><circle cx="278.5" cy="160.3" r="4.5" fill="var(--s1)" fill-opacity="0.62" stroke="var(--surface)" stroke-width="1"><title>保时捷 911 Carrera 3.0T · 上海 · 5.2年 · ¥755,000</title></circle><text x="742.0" y="334.0" text-anchor="end" class="axname" font-size="11">车龄(年)</text><text x="10.0" y="22.0" text-anchor="start" class="axname" font-size="11">售价</text></svg></div>
+
+    <h2>车型行情一览</h2>
+    <div class="card"><table><tr><th>车型</th><th class="num">在售</th>
+      <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
+      <tr><td>保时捷 911</td><td class="num">7</td><td class="num">¥478,000</td><td class="num">¥798,000</td><td class="num">¥988,000</td></tr><tr><td>保时捷911 Carrera</td><td class="num">4</td><td class="num">¥495,000</td><td class="num">¥749,000</td><td class="num">¥1,050,000</td></tr></table></div>
+
+    <h2>快照对比</h2><p class="empty">这是第一次快照。再运行一次 track（建议隔天或定时）即可看到降价/新增/售出的逐辆对比。</p>
+
+    <h2>在售列表 · 价格从低到高</h2><div class="legend">共 11 辆，点卡片跳转官网详情；里程颜色越深＝公里数越大。</div><div class="filters" data-target="cards-p911"><div class="frow"><span class="flabel">车型</span><button class="chip" data-group="model" data-value="保时捷 911">保时捷 911</button><button class="chip" data-group="model" data-value="保时捷911 Carrera">保时捷911 Carrera</button></div><div class="sliders"><div class="rng" data-field="price" data-format="price" data-min="0" data-max="600000"><div class="rng-top"><span class="rng-name">价格</span><div class="rng-track"><div class="rng-rail"></div><div class="rng-fill"></div><input type="range" data-role="min" min="0" max="600000" step="5000" value="0"><input type="range" data-role="max" min="0" max="600000" step="5000" value="600000"></div></div><div class="rng-vals"><div class="rng-pill rmin"></div><span class="rng-dash"></span><div class="rng-pill rmax"></div></div></div><div class="rng" data-field="mileage" data-format="km" data-min="0" data-max="65000"><div class="rng-top"><span class="rng-name">里程</span><div class="rng-track"><div class="rng-rail"></div><div class="rng-fill"></div><input type="range" data-role="min" min="0" max="65000" step="1000" value="0"><input type="range" data-role="max" min="0" max="65000" step="1000" value="65000"></div></div><div class="rng-vals"><div class="rng-pill rmin"></div><span class="rng-dash"></span><div class="rng-pill rmax"></div></div></div><div class="rng" data-field="age" data-format="age" data-min="0" data-max="15"><div class="rng-top"><span class="rng-name">车龄</span><div class="rng-track"><div class="rng-rail"></div><div class="rng-fill"></div><input type="range" data-role="min" min="0" max="15" step="1" value="0"><input type="range" data-role="max" min="0" max="15" step="1" value="15"></div></div><div class="rng-vals"><div class="rng-pill rmin"></div><span class="rng-dash"></span><div class="rng-pill rmax"></div></div></div></div><div class="frow"><span class="fcount">显示 <b>11</b> / 11 辆</span><button class="freset">重置筛选</button></div></div><div class="cards" id="cards-p911" data-limit="0" data-expanded="0"><a class="pcard" href="https://m.akd.cn/car/712350/" target="_blank" data-model="保时捷 911" data-oil="" data-color="" data-price="478000" data-mileage="56445" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/07/15/95d37b1c5bcc4a08a0c4a0fb254fd7b5.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥478,000</div><div class="pcard-title">保时捷 911 Carrera 3.0T</div><div class="pcard-meta"><span class="mi mi-warn">5.6万km</span><span>2018.08上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/712935/" target="_blank" data-model="保时捷911 Carrera" data-oil="" data-color="" data-price="495000" data-mileage="64853" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/07/28/a74885238f1f4ff695d6d3bb8bc35a27.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥495,000</div><div class="pcard-title">保时捷911 Carrera Cabriolet</div><div class="pcard-meta"><span class="mi mi-warn">6.5万km</span><span>2016.06上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/707025/" target="_blank" data-model="保时捷911 Carrera" data-oil="" data-color="" data-price="738000" data-mileage="45485" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/03/29/80077d88b17948a4a6c73bf92f97b361.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥738,000</div><div class="pcard-title">保时捷911 Carrera</div><div class="pcard-meta"><span class="mi mi-warn">4.5万km</span><span>2022.01上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/713141/" target="_blank" data-model="保时捷 911" data-oil="" data-color="" data-price="738000" data-mileage="45766" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/08/08/645076a06d604bb5bea92b5fe08707ab.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥738,000</div><div class="pcard-title">保时捷 911 Carrera  3.0T</div><div class="pcard-meta"><span class="mi mi-warn">4.6万km</span><span>2020.09上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/713446/" target="_blank" data-model="保时捷 911" data-oil="" data-color="" data-price="755000" data-mileage="42520" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/08/07/1390dcecff2a4bf691727671829de5e2.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥755,000</div><div class="pcard-title">保时捷 911 Carrera 3.0T</div><div class="pcard-meta"><span class="mi mi-warn">4.3万km</span><span>2021.06上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/713165/" target="_blank" data-model="保时捷911 Carrera" data-oil="" data-color="" data-price="760000" data-mileage="25182" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/08/03/a738db23978a484397f7d22f9e85f309.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥760,000</div><div class="pcard-title">保时捷911 Carrera</div><div class="pcard-meta"><span class="mi mi-good">2.5万km</span><span>2022.04上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/712995/" target="_blank" data-model="保时捷 911" data-oil="" data-color="" data-price="798000" data-mileage="25944" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/07/31/06fe6e55a4484ddd8f07dceced5080e1.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥798,000</div><div class="pcard-title">保时捷 911 Carrera 3.0T</div><div class="pcard-meta"><span class="mi mi-good">2.6万km</span><span>2021.07上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/711329/" target="_blank" data-model="保时捷 911" data-oil="" data-color="" data-price="833000" data-mileage="44050" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/06/25/ef2568c896b643cf8059c7f00e88f108.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥833,000</div><div class="pcard-title">保时捷 911 Carrera S 3.0T</div><div class="pcard-meta"><span class="mi mi-warn">4.4万km</span><span>2022.11上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/710582/" target="_blank" data-model="保时捷 911" data-oil="" data-color="" data-price="950000" data-mileage="15837" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/06/13/ec915a7041c54d518af1115059968a2c.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥950,000</div><div class="pcard-title">保时捷 911 Carrera 3.0T</div><div class="pcard-meta"><span class="mi mi-good">1.6万km</span><span>2023.10上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/712181/" target="_blank" data-model="保时捷 911" data-oil="" data-color="" data-price="988000" data-mileage="25579" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/07/11/a1a7359f53f44be7b8104da7c26898d8.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥988,000</div><div class="pcard-title">保时捷 911 Carrera S</div><div class="pcard-meta"><span class="mi mi-good">2.6万km</span><span>2021.09上牌</span></div><div class="pcard-shop">澳康达</div></div></a><a class="pcard" href="https://m.akd.cn/car/711866/" target="_blank" data-model="保时捷911 Carrera" data-oil="" data-color="" data-price="1050000" data-mileage="38280" data-age="0"><div class="pcard-img"><img loading="lazy" src="https://mobileimg.akd.cn/450/car/2026/07/04/330d06ea6f684b01a88d0205e07bdf20.JPG" alt=""></div><div class="pcard-b"><div class="pcard-price">¥1,050,000</div><div class="pcard-title">保时捷911 Carrera 4S</div><div class="pcard-meta"><span class="mi mi-warn">3.8万km</span><span>2021.05上牌</span></div><div class="pcard-shop">澳康达</div></div></a></div>
+    </div><p class="foot">自动生成于 2026-08-08 20:18。顶部切换车系；数据源 akd.cn。</p></div><script>
+(function(){
+  // 顶部档位切换
+  document.querySelectorAll('.tab').forEach(function(t){
+    t.addEventListener('click',function(){
+      var v=t.getAttribute('data-view');
+      document.querySelectorAll('.tab').forEach(function(x){x.classList.toggle('active',x===t);});
+      document.querySelectorAll('.view').forEach(function(x){x.classList.toggle('active',x.id==='view-'+v);});
+      scrollNewest(document.getElementById('view-'+v));
+    });
+  });
+
+  // 走势粒度切换(日/周/月/年线) + 默认滚到最新(最右)
+  function scrollNewest(scope){
+    (scope||document).querySelectorAll('.trendbox .lc-scroll').forEach(function(c){c.scrollLeft=c.scrollWidth;});
+  }
+  document.querySelectorAll('.trendbox').forEach(function(box){
+    box.querySelectorAll('.gbtn').forEach(function(b){
+      b.addEventListener('click',function(){
+        var g=b.getAttribute('data-gran');
+        box.querySelectorAll('.gbtn').forEach(function(x){x.classList.toggle('active',x===b);});
+        box.querySelectorAll('.gran').forEach(function(x){x.classList.toggle('active',x.classList.contains('gran-'+g));});
+        scrollNewest(box);
+      });
+    });
+  });
+  scrollNewest();
+
+  // K线十字光标：划到哪显示该点日期+数值
+  document.querySelectorAll('svg.linechart').forEach(function(svg){
+    var pts; try{pts=JSON.parse(svg.getAttribute('data-pts'));}catch(e){return;}
+    if(!pts||!pts.length)return;
+    var line=svg.querySelector('.xline'),dot=svg.querySelector('.xdot'),read=svg.querySelector('.xread');
+    var vbw=svg.viewBox.baseVal.width;
+    function toLoc(e){var p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;var m=svg.getScreenCTM();return m?p.matrixTransform(m.inverse()):null;}
+    function show(e){var l=toLoc(e);if(!l)return;var bi=0,bd=1e9;
+      for(var i=0;i<pts.length;i++){var d=Math.abs(pts[i][0]-l.x);if(d<bd){bd=d;bi=i;}}
+      var p=pts[bi];
+      line.setAttribute('x1',p[0]);line.setAttribute('x2',p[0]);line.style.display='';
+      dot.setAttribute('cx',p[0]);dot.setAttribute('cy',p[1]);dot.style.display='';
+      read.setAttribute('x',Math.max(38,Math.min(vbw-38,p[0])));read.textContent=p[3]+'　'+p[2];read.style.display='';}
+    function hide(){line.style.display='none';dot.style.display='none';read.style.display='none';}
+    svg.addEventListener('pointermove',show);
+    svg.addEventListener('pointerdown',show);
+    svg.addEventListener('pointerleave',hide);
+    svg.addEventListener('pointercancel',hide);
+  });
+
+  // 悬浮回顶部按钮
+  (function(){
+    var btn=document.createElement('button');btn.className='toTop';btn.textContent='↑';
+    btn.setAttribute('aria-label','回到顶部');document.body.appendChild(btn);
+    btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+    function s(){btn.classList.toggle('show',window.scrollY>600);}
+    window.addEventListener('scroll',s,{passive:true});s();
+  })();
+
+  function nfmt(v){return Number(v).toLocaleString('en-US');}
+  function fmtVal(fmt,v,plus){
+    if(fmt==='price')return '¥'+nfmt(v)+(plus?'+':'');
+    if(fmt==='km')return nfmt(v)+(plus?'+':'')+' km';
+    return ''+v;   /* 车龄 */
+  }
+  function updateRng(rng){
+    var ins=rng.querySelectorAll('input[type=range]'), MIN=+rng.dataset.min, MAX=+rng.dataset.max, fmt=rng.dataset.format;
+    var a=Math.min(+ins[0].value,+ins[1].value), b=Math.max(+ins[0].value,+ins[1].value);
+    var span=(MAX-MIN)||1, fill=rng.querySelector('.rng-fill');
+    fill.style.left=((a-MIN)/span*100)+'%';
+    fill.style.width=((b-a)/span*100)+'%';
+    rng.querySelector('.rmin').textContent=fmtVal(fmt,a,false);
+    rng.querySelector('.rmax').textContent=fmtVal(fmt,b,b>=MAX);
+  }
+  function apply(box){
+    var cards=document.getElementById(box.dataset.target); if(!cards)return;
+    var groups={};
+    box.querySelectorAll('[data-group].on').forEach(function(c){
+      (groups[c.dataset.group]=groups[c.dataset.group]||[]).push(c.dataset.value);
+    });
+    var rs={};
+    box.querySelectorAll('.rng').forEach(function(rng){
+      var ins=rng.querySelectorAll('input[type=range]'), MIN=+rng.dataset.min, MAX=+rng.dataset.max;
+      var lo=Math.min(+ins[0].value,+ins[1].value), hi=Math.max(+ins[0].value,+ins[1].value);
+      rs[rng.dataset.field]=[lo<=MIN?-Infinity:lo, hi>=MAX?Infinity:hi];
+    });
+    var limit=+cards.dataset.limit||0, expanded=cards.dataset.expanded==='1', matched=0;
+    Array.prototype.forEach.call(cards.children,function(card){
+      var ok=true, g, f;
+      for(g in groups){ if(groups[g].indexOf(card.dataset[g])<0){ok=false;break;} }
+      if(ok) for(f in rs){ var v=+card.dataset[f]; if(v<rs[f][0]||v>rs[f][1]){ok=false;break;} }
+      if(!ok){ card.style.display='none'; return; }
+      matched++;
+      card.style.display=(expanded||!limit||matched<=limit)?'':'none';
+    });
+    var b=box.querySelector('.fcount b'); if(b)b.textContent=matched;
+    var more=cards.nextElementSibling;
+    if(more&&more.classList.contains('showmore')){
+      if(!expanded&&limit&&matched>limit){more.style.display='';more.textContent='展开全部（还有 '+(matched-limit)+' 辆）';}
+      else more.style.display='none';
+    }
+  }
+  document.querySelectorAll('.filters').forEach(function(box){
+    var cards=document.getElementById(box.dataset.target);
+    box.querySelectorAll('[data-group]').forEach(function(c){
+      c.addEventListener('click',function(){c.classList.toggle('on');apply(box);});
+    });
+    box.querySelectorAll('.rng').forEach(function(rng){
+      rng.querySelectorAll('input[type=range]').forEach(function(inp){
+        inp.addEventListener('input',function(){updateRng(rng);apply(box);});
+      });
+      updateRng(rng);
+    });
+    var more=cards&&cards.nextElementSibling;
+    if(more&&more.classList.contains('showmore'))
+      more.addEventListener('click',function(){cards.dataset.expanded='1';apply(box);});
+    var rst=box.querySelector('.freset');
+    if(rst)rst.addEventListener('click',function(){
+      box.querySelectorAll('[data-group].on').forEach(function(c){c.classList.remove('on');});
+      box.querySelectorAll('.rng').forEach(function(rng){
+        var ins=rng.querySelectorAll('input[type=range]');
+        ins[0].value=rng.dataset.min; ins[1].value=rng.dataset.max; updateRng(rng);
+      });
+      if(cards)cards.dataset.expanded='0';
+      apply(box);
+    });
+    apply(box);
+  });
+})();
+</script></body></html>
