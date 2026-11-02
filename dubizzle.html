@@ -74,6 +74,14 @@ a{color:var(--s1);text-decoration:none}
 .view{display:none}
 .view.active{display:block}
 .section-flow{display:block}
+.analysis-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-top:34px;padding:14px 16px;border:1px solid var(--border);border-radius:14px;
+  background:var(--surface);color:var(--ink);font:inherit;font-size:clamp(1.02rem,2.4vw,1.2rem);
+  line-height:1.2;letter-spacing:-.012em;font-weight:650;cursor:pointer;text-align:left}
+.analysis-toggle::after{content:"展开";font-size:.76rem;font-weight:500;color:var(--s1)}
+.section-analysis.open>.analysis-toggle::after{content:"收起"}
+.analysis-content{display:none}
+.section-analysis.open>.analysis-content{display:block}
 
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:14px 0 6px}
 .tile{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:15px 17px}
@@ -242,6 +250,8 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 
     <div class="section-flow">
     <div class="section-analysis">
+    <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
+    <div class="analysis-content">
     <div class="trendbox">
     <div class="trendtabs"><button class="gbtn active" data-gran="day">日线</button><button class="gbtn" data-gran="week">周线</button><button class="gbtn" data-gran="month">月线</button></div>
     <h2>中位价走势</h2>
@@ -266,6 +276,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <tr><td>Lexus GX</td><td class="num">4</td><td class="num">AED 160,000</td><td class="num">AED 182,500</td><td class="num">AED 199,900</td></tr><tr><td>Lexus AED</td><td class="num">1</td><td class="num">AED 189,999</td><td class="num">AED 189,999</td><td class="num">AED 189,999</td></tr><tr><td>Lexus 2023</td><td class="num">1</td><td class="num">AED 189,000</td><td class="num">AED 189,000</td><td class="num">AED 189,000</td></tr></table></div>
 
     <h2>较上次快照（2026-10-31 18:47）的变化</h2><div class="legend">降价 0 · 涨价 0 · 新增 1 · 下架/疑似售出 1</div>
+    </div>
     </div>
 
     <div class="section-listing">
@@ -314,6 +325,15 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     });
   });
   scrollNewest();
+
+  // 走势与行情分析默认折叠，需要时再展开。
+  document.querySelectorAll('.analysis-toggle').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var box=btn.closest('.section-analysis'),open=!box.classList.contains('open');
+      box.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
+      if(open)scrollNewest(box);
+    });
+  });
 
   // K线十字光标：划到哪显示该点日期+数值
   document.querySelectorAll('svg.linechart').forEach(function(svg){
