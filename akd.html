@@ -16,14 +16,21 @@
   font-weight:100 900;font-style:normal;font-display:swap}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
+html.font-lg{font-size:112.5%}
+html.font-xl{font-size:125%}
 body{margin:0;background:var(--page);color:var(--ink);
   font:330 100%/1.55 'MiSans','Inter',-apple-system,system-ui,"PingFang SC","Microsoft YaHei","Segoe UI",Arial,sans-serif;
   letter-spacing:0;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 .wrap{max-width:1160px;margin:0 auto;padding:0 20px 72px}
 .topnav{width:100vw;position:relative;left:50%;margin-left:-50vw;background:var(--surface);
   border-bottom:1px solid var(--border);margin-bottom:20px}
-.topnav-inner{max-width:1160px;margin:0 auto;padding:12px 20px}
+.topnav-inner{max-width:1160px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:18px}
 .brandnav{display:flex;flex-wrap:wrap;gap:28px}
+.brandnav{flex:1;min-width:0}
+.fontctrl{display:inline-flex;flex:none;padding:3px;background:var(--pill);border-radius:11px;gap:2px}
+.fontctrl button{min-width:44px;min-height:38px;padding:7px 10px;border:0;border-radius:8px;background:transparent;
+  color:var(--ink2);font:inherit;font-size:.76rem;font-weight:600;white-space:nowrap;cursor:pointer}
+.fontctrl button.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.14)}
 .brandnav a,.brandnav .cur{font-size:.82rem;font-weight:400;padding:2px 0;color:var(--ink2);
   text-decoration:none;transition:color .2s}
 .brandnav a:hover{color:var(--ink)}
@@ -220,6 +227,8 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 @media (max-width:560px){
   .wrap{padding:0 12px 60px}
   .topnav-inner{padding:11px 12px}
+  .topnav-inner{align-items:flex-start;flex-direction:column;gap:10px}
+  .fontctrl{align-self:flex-end}
   .topbar{margin:0 -12px 16px;padding:10px 12px}
   .seg{display:flex}
   .pcard-b{padding:10px 11px 12px}
@@ -228,6 +237,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
   .pcard-meta{font-size:.76rem}
   /* 移动端优先展示车辆产品。 */
   .section-flow{display:flex;flex-direction:column}
+  html.font-xl .cards{grid-template-columns:1fr}
 }
 .toTop{display:none;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:40;
   width:46px;height:46px;border-radius:50%;border:1px solid var(--border);background:var(--bar);
@@ -776,8 +786,32 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <h2>较上次快照（2026-10-31 16:55）的变化</h2><div class="legend">降价 2 · 涨价 0 · 新增 0 · 下架/疑似售出 0</div><div class="card"><table><tr><th>车型</th><th>城市</th><th class="num">原价</th><th class="num">现价</th><th class="num">降幅</th></tr><tr><td>奔驰S320L</td><td>深圳</td><td class="num">¥328,000</td><td class="num">¥318,000</td><td class="num down">↓¥10,000</td></tr><tr><td>奔驰S350L 尊享型臻藏版</td><td>深圳</td><td class="num">¥378,000</td><td class="num">¥373,000</td><td class="num down">↓¥5,000</td></tr></table></div>
     </div>
     </div>
-    </div><p class="foot">自动生成于 2026-11-10 16:25。顶部先选品牌，再选型号；数据源 akd.cn。</p></div></div><script>
+    </div><p class="foot">自动生成于 2026-11-10 13:59。顶部先选品牌，再选型号；数据源 akd.cn。</p></div></div><script>
 (function(){
+  // 字号调节：标准/大字/超大，设置会在同源所有报告页之间保留。
+  (function(){
+    var levels=[['normal','标准'],['lg','大字'],['xl','超大']],key='report_font_size';
+    var host=document.querySelector('.topnav-inner')||document.querySelector('.wrap');
+    if(!host)return;
+    var box=document.createElement('div');box.className='fontctrl';box.setAttribute('role','group');box.setAttribute('aria-label','字号调节');
+    function apply(level){
+      document.documentElement.classList.remove('font-lg','font-xl');
+      if(level==='lg')document.documentElement.classList.add('font-lg');
+      if(level==='xl')document.documentElement.classList.add('font-xl');
+      box.querySelectorAll('button').forEach(function(b){
+        var on=b.getAttribute('data-size')===level;b.classList.toggle('active',on);b.setAttribute('aria-pressed',on?'true':'false');
+      });
+      try{localStorage.setItem(key,level);}catch(e){}
+    }
+    levels.forEach(function(item){
+      var b=document.createElement('button');b.type='button';b.textContent=item[1];b.setAttribute('data-size',item[0]);
+      b.addEventListener('click',function(){apply(item[0]);});box.appendChild(b);
+    });
+    host.appendChild(box);
+    var saved='normal';try{saved=localStorage.getItem(key)||'normal';}catch(e){}
+    apply(saved);
+  })();
+
   // 顶部档位切换
   document.querySelectorAll('.tab').forEach(function(t){
     t.addEventListener('click',function(){
