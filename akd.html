@@ -130,8 +130,11 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 @media(min-width:520px){.cards{grid-template-columns:repeat(3,1fr);gap:14px}}
 @media(min-width:760px){.cards{grid-template-columns:repeat(4,1fr)}}
 @media(min-width:1000px){.cards{grid-template-columns:repeat(5,1fr);gap:16px}}
-/* 电脑端超大字同步放大车辆图片：每行由 5 辆减少为 3 辆。 */
+/* 字号变大时同步减少每行车辆数，避免文字挤压并放大图片。 */
+@media(min-width:760px){html.font-lg .cards{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1000px){html.font-lg .cards{grid-template-columns:repeat(4,1fr)}}
 @media(min-width:760px){html.font-xl .cards{grid-template-columns:repeat(3,1fr);gap:18px}}
+@media(min-width:520px) and (max-width:759px){html.font-lg .cards,html.font-xl .cards{grid-template-columns:repeat(2,1fr)}}
 .pcard{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);
   border-radius:18px;color:inherit;
   transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
@@ -916,15 +919,34 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     
     </div>
     </div>
-    </div><p class="foot">自动生成于 2026-11-11 03:52。聚合深圳军哥与澳康达车源；每张车辆卡片底部标注具体来源。</p></div><script>
+    </div><p class="foot">自动生成于 2026-11-11 00:05。聚合深圳军哥与澳康达车源；每张车辆卡片底部标注具体来源。</p></div><script>
 (function(){
   // 字号调节：标准/大字/超大，设置会在同源所有报告页之间保留。
   (function(){
     var levels=[['normal','标准'],['lg','大字'],['xl','超大']],key='report_font_size';
+    var currentLevel='normal',layoutFrame=0;
     var host=document.querySelector('.topnav-inner')||document.querySelector('.wrap');
     if(!host)return;
     var box=document.createElement('div');box.className='fontctrl';box.setAttribute('role','group');box.setAttribute('aria-label','字号调节');
+    function updateCardColumns(){
+      var w=window.innerWidth,cols;
+      if(w<520)cols=currentLevel==='xl'?1:2;
+      else if(w<760)cols=currentLevel==='normal'?3:2;
+      else if(w<1000)cols=currentLevel==='normal'?4:3;
+      else cols=currentLevel==='normal'?5:(currentLevel==='lg'?4:3);
+      document.querySelectorAll('.cards').forEach(function(cards){
+        cards.style.gridTemplateColumns='repeat('+cols+', minmax(0, 1fr))';
+      });
+    }
+    function refreshLayout(){
+      if(layoutFrame)cancelAnimationFrame(layoutFrame);
+      updateCardColumns();
+      /* 部分旧版移动浏览器需下一帧再次计算隐藏列表和图片尺寸。 */
+      layoutFrame=requestAnimationFrame(function(){updateCardColumns();layoutFrame=0;});
+    }
     function apply(level){
+      if(level!=='lg'&&level!=='xl')level='normal';
+      currentLevel=level;
       document.documentElement.classList.remove('font-lg','font-xl');
       if(level==='lg')document.documentElement.classList.add('font-lg');
       if(level==='xl')document.documentElement.classList.add('font-xl');
@@ -932,6 +954,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
         var on=b.getAttribute('data-size')===level;b.classList.toggle('active',on);b.setAttribute('aria-pressed',on?'true':'false');
       });
       try{localStorage.setItem(key,level);}catch(e){}
+      refreshLayout();
     }
     levels.forEach(function(item){
       var b=document.createElement('button');b.type='button';b.textContent=item[1];b.setAttribute('data-size',item[0]);
@@ -940,6 +963,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     host.appendChild(box);
     var saved='normal';try{saved=localStorage.getItem(key)||'normal';}catch(e){}
     apply(saved);
+    window.addEventListener('resize',refreshLayout,{passive:true});
   })();
 
   // 顶部档位切换
