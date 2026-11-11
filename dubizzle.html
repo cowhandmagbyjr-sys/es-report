@@ -241,6 +241,21 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
   .fontctrl{align-self:flex-end}
   .topbar{margin:0 -12px 16px;padding:10px 12px}
   .seg{display:flex}
+  /* 手机端采用 iOS 风格的横向胶囊选择器：保持单行、露出下一项提示可滑动。 */
+  .navcard{margin-left:-12px;margin-right:-12px;padding:10px 12px 7px;border-left:0;border-right:0;
+    border-radius:0;background:var(--bar);backdrop-filter:saturate(180%) blur(20px);
+    -webkit-backdrop-filter:saturate(180%) blur(20px)}
+  .navcard>.brandseg{flex-wrap:nowrap;overflow-x:auto;width:calc(100% + 12px);max-width:none;
+    margin-right:-12px;padding:3px 24px 3px 3px;scroll-snap-type:x proximity;scroll-padding:12px;
+    scrollbar-width:none;background:transparent}
+  .navcard>.brandseg::-webkit-scrollbar,.modelseg::-webkit-scrollbar{display:none}
+  .navcard>.brandseg>.btab{flex:0 0 auto;min-height:38px;padding:8px 15px;border-radius:999px;
+    background:var(--pill);font-size:.84rem;scroll-snap-align:center}
+  .navcard>.brandseg>.btab.active{background:var(--ink);color:var(--surface);
+    box-shadow:0 2px 8px rgba(0,0,0,.18)}
+  .navcard .modelrow{margin-top:7px}
+  .modelseg{width:100%;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+  .modelseg .tab{flex:0 0 auto;padding:8px 12px}
   .pcard-b{padding:10px 11px 12px}
   .pcard-price{font-size:1.06rem}
   .pcard-title{font-size:.85rem}
@@ -304,7 +319,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     
     </div>
     </div>
-    </div><p class="foot">自动生成于 2026-11-11 03:54。价格单位 AED；卡片显示公里数，并标注 GCC Specs / 非GCC或未标明。</p></div><script>
+    </div><p class="foot">自动生成于 2026-11-11 04:00。价格单位 AED；卡片显示公里数，并标注 GCC Specs / 非GCC或未标明。</p></div><script>
 (function(){
   // 字号调节：标准/大字/超大，设置会在同源所有报告页之间保留。
   (function(){
@@ -362,6 +377,12 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     });
   });
   // 澳康达两级导航：品牌 -> 型号
+  function centerBrandTab(tab,instant){
+    var row=tab&&tab.parentElement;if(!row||window.innerWidth>560)return;
+    var left=tab.offsetLeft-(row.clientWidth-tab.offsetWidth)/2;
+    if(row.scrollTo)row.scrollTo({left:Math.max(0,left),behavior:instant?'auto':'smooth'});
+    else row.scrollLeft=Math.max(0,left);
+  }
   document.querySelectorAll('.btab').forEach(function(b){
     b.addEventListener('click',function(){
       var brand=b.getAttribute('data-brand');
@@ -371,8 +392,10 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       var seg=document.querySelector('.modelseg[data-brand="'+brand+'"]');
       var m=seg&&(seg.querySelector('.tab.active')||seg.querySelector('.tab'));
       if(m)m.click();   // 切到该品牌时激活其(上次或第一个)型号
+      centerBrandTab(b,false);
     });
   });
+  centerBrandTab(document.querySelector('.btab.active'),true);
 
   // 走势粒度切换(日/周/月/年线) + 默认滚到最新(最右)
   function scrollNewest(scope){
