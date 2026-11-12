@@ -243,13 +243,14 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .delisted.open>.delisted-toggle::after{content:"收起"}
 .delisted-content{display:none}
 .delisted.open>.delisted-content{display:block;padding-top:12px}
-.delisted-filter{display:flex;align-items:flex-start;gap:10px;margin:12px 0;padding:10px 12px;border:1px solid var(--border);
-  border-radius:13px;background:var(--surface)}
+.delisted-filter{position:relative;display:flex;flex-direction:column;gap:8px;margin:12px 0;padding:10px 70px 10px 12px;
+  border:1px solid var(--border);border-radius:13px;background:var(--surface)}
+.delisted-filter-row{display:flex;align-items:flex-start;gap:10px}
 .delisted-label{padding-top:7px;font-size:.78rem;font-weight:650;color:var(--ink2);white-space:nowrap}
 .delisted-tabs{display:flex;flex:1;flex-wrap:wrap;gap:6px}.dmodel{min-height:34px;padding:6px 11px;border:1px solid var(--border);
   border-radius:999px;background:var(--page);color:var(--ink2);font:inherit;font-size:.76rem;cursor:pointer}
 .dmodel.on{border-color:var(--ink);background:var(--ink);color:var(--surface)}
-.delisted-count{padding-top:7px;margin-left:auto;color:var(--muted);font-size:.75rem;white-space:nowrap}
+.delisted-count{position:absolute;right:12px;top:17px;color:var(--muted);font-size:.75rem;white-space:nowrap}
 
 @media (max-width:560px){
   .wrap{padding:0 12px 60px}
@@ -316,8 +317,8 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
   place-items:center;width:68px;height:68px;margin:0 auto 14px;border-radius:50%;background:var(--pill);color:#e53935;font-size:32px}
 .fav-empty strong{display:block;color:var(--ink);font-size:1rem;margin-bottom:5px}
 @media(max-width:560px){
-  .delisted-filter{display:grid;grid-template-columns:auto 1fr;gap:8px}.delisted-tabs{grid-column:1/-1}
-  .delisted-count{grid-column:2;grid-row:1;padding-top:7px;text-align:right}
+  .delisted-filter{padding:10px 12px 38px}.delisted-filter-row{display:block}.delisted-label{display:block;padding:2px 0 6px}
+  .delisted-count{top:auto;bottom:11px;right:12px}
   .fav-overlay{padding:0}.fav-sheet{max-height:88vh;padding:14px;border-radius:22px 22px 0 0}
   .fav-head{top:-14px;margin:-14px -14px 12px;padding:15px 14px}
   .fav-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.fav-info{padding:9px 10px 11px}
@@ -1192,7 +1193,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     
     </div>
     </div>
-    </div><p class="foot">自动生成于 2026-11-12 04:23。聚合深圳军哥与澳康达车源；每张车辆卡片底部标注具体来源。</p></div><script>
+    </div><p class="foot">自动生成于 2026-11-12 04:24。聚合深圳军哥与澳康达车源；每张车辆卡片底部标注具体来源。</p></div><script>
 (function(){
   // 字号调节：标准/大字/超大，设置会在同源所有报告页之间保留。
   (function(){
@@ -1330,23 +1331,33 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     });
   });
   document.querySelectorAll('.delisted-filter').forEach(function(filter){
-    var box=filter.closest('.delisted'),all=filter.querySelector('[data-delisted-all]');
+    var box=filter.closest('.delisted');
     function applyDelisted(){
-      var chosen=[];filter.querySelectorAll('[data-delisted-model].on').forEach(function(b){chosen.push(b.dataset.delistedModel);});
+      var models=[],years=[];
+      filter.querySelectorAll('[data-delisted-model].on').forEach(function(b){models.push(b.dataset.delistedModel);});
+      filter.querySelectorAll('[data-delisted-year].on').forEach(function(b){years.push(b.dataset.delistedYear);});
       var count=0;box.querySelectorAll('tr[data-model]').forEach(function(row){
-        var show=!chosen.length||chosen.indexOf(row.dataset.model)>=0;row.style.display=show?'':'none';if(show)count++;
+        var show=(!models.length||models.indexOf(row.dataset.model)>=0)&&(!years.length||years.indexOf(row.dataset.year)>=0);
+        row.style.display=show?'':'none';if(show)count++;
       });
       var out=filter.querySelector('.delisted-count');if(out)out.textContent='共 '+count+' 条';
     }
-    all.addEventListener('click',function(){
-      filter.querySelectorAll('[data-delisted-model].on').forEach(function(b){b.classList.remove('on');});
+    filter.querySelectorAll('[data-delisted-all]').forEach(function(all){all.addEventListener('click',function(){
+      var kind=all.dataset.delistedAll;
+      filter.querySelectorAll(kind==='model'?'[data-delisted-model].on':'[data-delisted-year].on').forEach(function(b){b.classList.remove('on');});
       all.classList.add('on');applyDelisted();
     });
-    filter.querySelectorAll('[data-delisted-model]').forEach(function(b){b.addEventListener('click',function(){
-      b.classList.toggle('on');all.classList.remove('on');
-      if(!filter.querySelector('[data-delisted-model].on'))all.classList.add('on');
-      applyDelisted();
-    });});
+    });
+    function bind(kind){
+      var attr=kind==='model'?'data-delisted-model':'data-delisted-year';
+      var all=filter.querySelector('[data-delisted-all="'+kind+'"]');
+      filter.querySelectorAll('['+attr+']').forEach(function(b){b.addEventListener('click',function(){
+        b.classList.toggle('on');all.classList.remove('on');
+        if(!filter.querySelector('['+attr+'].on'))all.classList.add('on');
+        applyDelisted();
+      });});
+    }
+    bind('model');bind('year');
   });
 
   function nfmt(v){return Number(v).toLocaleString('en-US');}
