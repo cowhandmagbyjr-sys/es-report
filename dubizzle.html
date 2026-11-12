@@ -148,6 +148,17 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
   box-shadow:0 3px 14px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.45);
   backdrop-filter:saturate(180%) blur(16px);-webkit-backdrop-filter:saturate(180%) blur(16px)}
 .fav-toggle.on{color:#e3262e;background:rgba(255,255,255,.64);border-color:rgba(255,255,255,.72)}
+.compare-toggle{position:absolute;right:9px;top:53px;z-index:4;width:34px;height:34px;border:1px solid rgba(255,255,255,.58);
+  border-radius:50%;background:rgba(255,255,255,.46);color:#333;font:650 18px/1 system-ui;cursor:pointer;
+  box-shadow:0 3px 12px rgba(0,0,0,.15);backdrop-filter:saturate(180%) blur(16px);-webkit-backdrop-filter:saturate(180%) blur(16px)}
+.compare-toggle.on{background:#007aff;color:#fff;border-color:rgba(255,255,255,.75)}
+.compare-bar{position:fixed;left:50%;bottom:18px;z-index:43;display:none;align-items:center;gap:10px;
+  transform:translateX(-50%);padding:8px 10px 8px 14px;border:1px solid var(--border);border-radius:999px;
+  background:var(--bar);box-shadow:0 8px 28px rgba(0,0,0,.2);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  font-size:.8rem;font-weight:650;white-space:nowrap}.compare-bar.show{display:flex}
+.compare-open,.compare-clear{min-height:34px;padding:6px 12px;border:0;border-radius:999px;font:inherit;cursor:pointer}
+.compare-open{background:#007aff;color:#fff}.compare-clear{background:var(--pill);color:var(--ink2)}
+.compare-table-wrap{overflow:auto}.compare-table{min-width:620px}.compare-table th:first-child{position:sticky;left:0;background:var(--page);z-index:1}
 .pcard-color{position:absolute;left:8px;top:8px;display:inline-flex;align-items:center;gap:5px;
   padding:4px 10px 4px 7px;border-radius:999px;background:rgba(255,255,255,.82);
   backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
@@ -168,6 +179,9 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .pcard-title{margin-top:4px;font-size:.9rem;color:var(--ink2);font-weight:330}
 .pcard-meta{margin-top:8px;font-size:.82rem;color:var(--ink2);display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}
 .emission{color:var(--s1);font-weight:650}
+.market-tag{padding:2px 6px;border-radius:6px;font-size:.7rem;font-weight:700}.market-tag.good{background:#e8f7ed;color:#147a3d}
+.market-tag.fair{background:#edf3ff;color:#2563a9}.market-tag.high{background:#fff1ed;color:#b54825}
+.dup-tag{color:#9a6700;font-size:.7rem;font-weight:650}
 .pcard-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin-top:auto;padding-top:9px}
 .pcard-shop{font-size:.78rem;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mi{font-weight:650;font-variant-numeric:tabular-nums}
@@ -293,6 +307,8 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
   box-shadow:0 8px 28px rgba(0,0,0,.2);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px)}
 .fav-float .heart{color:#e53935;font-size:1.2rem}.fav-count{min-width:20px;height:20px;padding:0 6px;border-radius:999px;
   background:var(--ink);color:var(--surface);font-size:.7rem;line-height:20px;text-align:center}
+.fav-float.has-alert::after{content:"";position:absolute;right:4px;top:2px;width:10px;height:10px;border:2px solid var(--surface);
+  border-radius:50%;background:#ff3b30}
 .fav-overlay{position:fixed;inset:0;z-index:80;display:none;background:rgba(0,0,0,.34);padding:20px;
   align-items:flex-end;justify-content:center;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
 .fav-overlay.open{display:flex}.fav-sheet{width:min(920px,100%);max-height:min(82vh,760px);overflow:auto;background:var(--page);
@@ -308,6 +324,9 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
   align-items:center;justify-content:center;background:rgba(0,0,0,.22);color:#fff;font-size:1.05rem;font-weight:750}
 .fav-item.delisted .fav-down{display:flex}.fav-info{padding:11px 12px 13px}.fav-price{font-size:1.08rem;font-weight:600}
 .fav-title{margin-top:3px;color:var(--ink2);font-size:.84rem}.fav-meta{margin-top:6px;color:var(--muted);font-size:.75rem}
+.fav-drop{margin-top:5px;color:#168443;font-size:.76rem;font-weight:700}.fav-note{width:calc(100% - 20px);margin:0 10px 11px;
+  min-height:36px;padding:8px 10px;border:1px solid var(--border);border-radius:9px;background:var(--page);color:var(--ink);
+  font:inherit;font-size:.75rem;resize:vertical}
 .fav-remove{position:absolute;right:8px;top:8px;z-index:2;width:32px;height:32px;border:0;border-radius:50%;
   background:rgba(255,255,255,.9);color:#555;font-size:18px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .fav-index{position:absolute;left:8px;top:8px;z-index:2;min-width:32px;height:32px;padding:0 9px;border-radius:999px;
@@ -323,6 +342,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
   .fav-head{top:-14px;margin:-14px -14px 12px;padding:15px 14px}
   .fav-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.fav-info{padding:9px 10px 11px}
   .fav-float{left:12px;bottom:calc(12px + env(safe-area-inset-bottom));padding:8px 12px 8px 10px}
+  .compare-bar{bottom:calc(70px + env(safe-area-inset-bottom))}
 }
 @media (prefers-reduced-motion: reduce){
   *{transition-duration:.001ms!important}
@@ -338,7 +358,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 
     <div class="section-flow">
     <div class="section-listing">
-    <h2>在售列表 · 价格从低到高</h2><div class="legend">共 6 辆，点卡片跳转官网详情；里程颜色越深＝公里数越大。</div><div class="filters" data-target="cards-gx460_2022"><div class="frow"><span class="flabel">车型</span><button class="chip" data-group="model" data-value="Lexus 2022">Lexus 2022</button><button class="chip" data-group="model" data-value="Lexus 2023">Lexus 2023</button><button class="chip" data-group="model" data-value="Lexus AED">Lexus AED</button><button class="chip" data-group="model" data-value="Lexus GX">Lexus GX</button></div><div class="sliders"><div class="rng" data-field="price" data-format="price" data-min="0" data-max="190000"><div class="rng-top"><span class="rng-name">价格</span><div class="rng-track"><div class="rng-rail"></div><div class="rng-fill"></div><input type="range" data-role="min" min="0" max="190000" step="5000" value="0"><input type="range" data-role="max" min="0" max="190000" step="5000" value="190000"></div></div><div class="rng-vals"><div class="rng-pill rmin"></div><span class="rng-dash"></span><div class="rng-pill rmax"></div></div></div><div class="rng" data-field="mileage" data-format="km" data-min="0" data-max="5000"><div class="rng-top"><span class="rng-name">里程</span><div class="rng-track"><div class="rng-rail"></div><div class="rng-fill"></div><input type="range" data-role="min" min="0" max="5000" step="1000" value="0"><input type="range" data-role="max" min="0" max="5000" step="1000" value="5000"></div></div><div class="rng-vals"><div class="rng-pill rmin"></div><span class="rng-dash"></span><div class="rng-pill rmax"></div></div></div><div class="rng" data-field="age" data-format="age" data-min="0" data-max="15"><div class="rng-top"><span class="rng-name">车龄</span><div class="rng-track"><div class="rng-rail"></div><div class="rng-fill"></div><input type="range" data-role="min" min="0" max="15" step="1" value="0"><input type="range" data-role="max" min="0" max="15" step="1" value="15"></div></div><div class="rng-vals"><div class="rng-pill rmin"></div><span class="rng-dash"></span><div class="rng-pill rmax"></div></div></div><div class="rng" data-field="stockdays" data-format="day" data-min="0" data-max="50"><div class="rng-top"><span class="rng-name">库存天数</span><div class="rng-track"><div class="rng-rail"></div><div class="rng-fill"></div><input type="range" data-role="min" min="0" max="50" step="1" value="0"><input type="range" data-role="max" min="0" max="50" step="1" value="50"></div></div><div class="rng-vals"><div class="rng-pill rmin"></div><span class="rng-dash"></span><div class="rng-pill rmax"></div></div></div></div><div class="frow sortbar"><span class="flabel">排序</span><button class="sortbtn on" data-key="price" data-dir="asc">价格 ↑</button><button class="sortbtn" data-key="stockdays" data-dir="desc">库存久</button><button class="sortbtn" data-key="drop" data-dir="desc">降价多</button></div><div class="frow"><span class="fcount">显示 <b>6</b> / 6 辆</span><button class="freset">重置筛选</button></div></div><div class="cards" id="cards-gx460_2022" data-limit="0" data-expanded="0"><a class="pcard" href="https://dubai.dubizzle.com/motors/used-cars/lexus/gx-series/2026/09/26/2023-lexus-gx-460-premier-gcc-specs-2-589---db3aeab87bff4bd0b39fbcd152a94bdf/" target="_blank" data-fav-id="gx460_2022:927765506523136383" data-fav-title="Lexus 2023 Lexus GX 460 Premier GCC Specs" data-fav-img="https://dbz-images.dubizzle.com/images/2026/09/26/cb2702d9c0484163a588e15b9157dce5-.jpg?impolicy=dpc" data-fav-shop="dubizzle" data-model="Lexus 2023" data-oil="Petrol" data-color="" data-city="Blue Bay Tower" data-province="Dubai" data-price="160000" data-mileage="0" data-age="0" data-stockdays="48" data-drop="0"><div class="pcard-img"><img loading="lazy" src="https://dbz-images.dubizzle.com/images/2026/09/26/cb2702d9c0484163a588e15b9157dce5-.jpg?impolicy=dpc" alt=""><div class="pcard-spec">非GCC</div><button class="fav-toggle" type="button" aria-label="收藏车辆" aria-pressed="false">♡</button></div><div class="pcard-b"><div class="pcard-price">AED 160,000</div><div class="pcard-title">Lexus 2023 Lexus GX 460 Premier GCC Specs</div><div class="pcard-meta"><span class="mi mi-good">0.0万km</span></div><div class="pcard-bottom"><span class="pcard-shop">dubizzle</span><span class="sd sd-mid" data-date="2026-09-26">48天</span></div></div></a><a class="pcard" href="https://dubai.dubizzle.com/motors/used-cars/lexus/gx-series/2026/11/09/lexus-gx-460-2022-gcc-specs-in-excellent-c-2-976---08fa405916384ae4b31ea2255f155686/" target="_blank" data-fav-id="gx460_2022:440437678949139885" data-fav-title="Lexus GX 460" data-fav-img="https://dbz-images.dubizzle.com/images/2026/11/09/cc66ac9a855c4628a05a9def0017426e-.png?impolicy=dpv" data-fav-shop="dubizzle" data-model="Lexus GX" data-oil="Petrol" data-color="" data-city="Ras Al Khor Industrial 3" data-province="Dubai" data-price="165000" data-mileage="0" data-age="0" data-stockdays="4" data-drop="0"><div class="pcard-img"><img loading="lazy" src="https://dbz-images.dubizzle.com/images/2026/11/09/cc66ac9a855c4628a05a9def0017426e-.png?impolicy=dpv" alt=""><div class="pcard-spec">非GCC</div><button class="fav-toggle" type="button" aria-label="收藏车辆" aria-pressed="false">♡</button></div><div class="pcard-b"><div class="pcard-price">AED 165,000</div><div class="pcard-title">Lexus GX 460</div><div class="pcard-meta"><span class="mi mi-good">0.0万km</span></div><div class="pcard-bottom"><span class="pcard-shop">dubizzle</span><span class="sd sd-fresh" data-date="2026-11-09">4天</span></div></div></a><a class="pcard" href="https://dubai.dubizzle.com/motors/used-cars/lexus/gx-series/2026/11/06/2022-lexus-gx460-platinum-gcc-full-agency--2-206---c8997b7ca64b44e4a8828ea5314fb5d5/" target="_blank" data-fav-id="gx460_2022:1033907371157433912" data-fav-title="Lexus 2022 LEXUS GX460 PLATINUM – GCC | FULL AGENCY HISTORY" data-fav-img="https://dbz-images.dubizzle.com/images/2026/11/06/798307f4ad0f4d2da8d522ba89884373-.jpg?impolicy=dpc" data-fav-shop="dubizzle" data-model="Lexus 2022" data-oil="Petrol" data-color="" data-city="Oud Metha" data-province="Dubai" data-price="169500" data-mileage="0" data-age="0" data-stockdays="6" data-drop="0"><div class="pcard-img"><img loading="lazy" src="https://dbz-images.dubizzle.com/images/2026/11/06/798307f4ad0f4d2da8d522ba89884373-.jpg?impolicy=dpc" alt=""><div class="pcard-spec">非GCC</div><button class="fav-toggle" type="button" aria-label="收藏车辆" aria-pressed="false">♡</button></div><div class="pcard-b"><div class="pcard-price">AED 169,500</div><div class="pcard-title">Lexus 2022 LEXUS GX460 PLATINUM – GCC | FULL AGENCY HISTORY</div><div class="pcard-meta"><span class="mi mi-good">0.0万km</span></div><div class="pcard-bottom"><span class="pcard-shop">dubizzle</span><span class="sd sd-fresh" data-date="2026-11-07">6天</span></div></div></a><a class="pcard" href="https://dubai.dubizzle.com/motors/used-cars/lexus/gx-series/2026/10/25/2022-lexus-gx-460-premier-gcc-specs-2-591---655cc19bedf443a4911184353d6be641/" target="_blank" data-fav-id="gx460_2022:323845436496499897" data-fav-title="Lexus 2022 Lexus GX 460 Premier GCC Specs" data-fav-img="https://dbz-images.dubizzle.com/images/2026/10/25/9bb340ce0ae94bef9c4a46dc52085c33-.jpg?impolicy=dpc" data-fav-shop="dubizzle" data-model="Lexus 2022" data-oil="Petrol" data-color="" data-city="Dubai" data-province="Dubai" data-price="185000" data-mileage="0" data-age="0" data-stockdays="18" data-drop="0"><div class="pcard-img"><img loading="lazy" src="https://dbz-images.dubizzle.com/images/2026/10/25/9bb340ce0ae94bef9c4a46dc52085c33-.jpg?impolicy=dpc" alt=""><div class="pcard-spec">非GCC</div><button class="fav-toggle" type="button" aria-label="收藏车辆" aria-pressed="false">♡</button></div><div class="pcard-b"><div class="pcard-price">AED 185,000</div><div class="pcard-title">Lexus 2022 Lexus GX 460 Premier GCC Specs</div><div class="pcard-meta"><span class="mi mi-good">0.0万km</span></div><div class="pcard-bottom"><span class="pcard-shop">dubizzle</span><span class="sd sd-fresh" data-date="2026-10-26">18天</span></div></div></a><a class="pcard" href="https://dubai.dubizzle.com/motors/used-cars/lexus/gx-series/2026/10/31/2023-lexus-gx-460-premier-feb2027-lexus-wa-2-515---402062060e6b4c7083ec10f7fe0d47b3/" target="_blank" data-fav-id="gx460_2022:1138519556324630160" data-fav-title="Lexus 2023 Lexus GX 460 Premier, Feb/2027 Lexus Warranty, Full Lexus Service History, GCC" data-fav-img="https://dbz-images.dubizzle.com/images/2026/10/31/124d99db424f4998a5ea6da7f204dcc9-.jpg?impolicy=dpv" data-fav-shop="dubizzle" data-model="Lexus 2023" data-oil="Petrol" data-color="" data-city="Al Quoz Industrial Area 3" data-province="Dubai" data-price="189000" data-mileage="0" data-age="0" data-stockdays="12" data-drop="0"><div class="pcard-img"><img loading="lazy" src="https://dbz-images.dubizzle.com/images/2026/10/31/124d99db424f4998a5ea6da7f204dcc9-.jpg?impolicy=dpv" alt=""><div class="pcard-spec">非GCC</div><button class="fav-toggle" type="button" aria-label="收藏车辆" aria-pressed="false">♡</button></div><div class="pcard-b"><div class="pcard-price">AED 189,000</div><div class="pcard-title">Lexus 2023 Lexus GX 460 Premier, Feb/2027 Lexus Warranty, Full Lexus Service History, GCC</div><div class="pcard-meta"><span class="mi mi-good">0.0万km</span></div><div class="pcard-bottom"><span class="pcard-shop">dubizzle</span><span class="sd sd-fresh" data-date="2026-11-01">12天</span></div></div></a><a class="pcard" href="https://dubai.dubizzle.com/motors/used-cars/lexus/gx-series/2026/10/30/aed-2887month-2023-lexus-gx-series-gx-460--2-322---212f785b664a4457b9934ee374885eb8/" target="_blank" data-fav-id="gx460_2022:1052733837392285668" data-fav-title="Lexus AED 2887/month | 2023 Lexus GX-Series GX 460 Premier | GCC Specs | Ref#544255" data-fav-img="https://dbz-images.dubizzle.com/images/2026/10/30/e81b7fc839dc43ecb3fab7cab4667d4e-.jpg?impolicy=dpv" data-fav-shop="dubizzle" data-model="Lexus AED" data-oil="Petrol" data-color="" data-city="Al Barsha" data-province="Dubai" data-price="189999" data-mileage="0" data-age="0" data-stockdays="14" data-drop="0"><div class="pcard-img"><img loading="lazy" src="https://dbz-images.dubizzle.com/images/2026/10/30/e81b7fc839dc43ecb3fab7cab4667d4e-.jpg?impolicy=dpv" alt=""><div class="pcard-spec">非GCC</div><button class="fav-toggle" type="button" aria-label="收藏车辆" aria-pressed="false">♡</button></div><div class="pcard-b"><div class="pcard-price">AED 189,999</div><div class="pcard-title">Lexus AED 2887/month | 2023 Lexus GX-Series GX 460 Premier | GCC Specs | Ref#544255</div><div class="pcard-meta"><span class="mi mi-good">0.0万km</span></div><div class="pcard-bottom"><span class="pcard-shop">dubizzle</span><span class="sd sd-fresh" data-date="2026-10-30">14天</span></div></div></a></div>
+    <h2>在售列表 · 价格从低到高</h2><div class="legend">共 6 辆，点卡片跳转官网详情；里程颜色越深＝公里数越大。</div><div class="filters" data-target="cards-gx460_2022"><div class="frow"><span class="flabel">车型</span><button class="chip" data-group="model" data-value="Lexus 2022">Lexus 2022</button><button class="chip" data-group="model" data-value="Lexus 2023">Lexus 2023</button><button class="chip" data-group="model" data-value="Lexus AED">Lexus AED</button><button class="chip" data-group="model" data-value="Lexus GX">Lexus GX</button></div><div class="frow"><span class="flabel">上新</span><button class="chip" data-group="new" data-value="1">仅看3天内新上</button></div><div class="sliders"><div class="rng" data-field="price" data-format="price" data-min="0" data-max="190000"><div class="rng-top"><span class="rng-name">价格</span><div class="rng-track"><div class="rng-rail"></div><div class="rng-fill"></div><input type="range" data-role="min" min="0" max="190000" step="5000" value="0"><input type="range" data-role="max" min="0" max="190000" step="5000" value="190000"></div></div><div class="rng-vals"><div class="rng-pill rmin"></div><span class="rng-dash"></span><div class="rng-pill rmax"></div></div></div><div class="rng" data-field="mileage" data-format="km" data-min="0" data-max="5000"><div class="rng-top"><span class="rng-name">里程</span><div class="rng-track"><div class="rng-rail"></div><div class="rng-fill"></div><input type="range" data-role="min" min="0" max="5000" step="1000" value="0"><input type="range" data-role="max" min="0" max="5000" step="1000" value="5000"></div></div><div class="rng-vals"><div class="rng-pill rmin"></div><span class="rng-dash"></span><div class="rng-pill rmax"></div></div></div><div class="rng" data-field="age" data-format="age" data-min="0" data-max="15"><div class="rng-top"><span class="rng-name">车龄</span><div class="rng-track"><div class="rng-rail"></div><div class="rng-fill"></div><input type="range" data-role="min" min="0" max="15" step="1" value="0"><input type="range" data-role="max" min="0" max="15" step="1" value="15"></div></div><div class="rng-vals"><div class="rng-pill rmin"></div><span class="rng-dash"></span><div class="rng-pill rmax"></div></div></div><div class="rng" data-field="stockdays" data-format="day" data-min="0" data-max="50"><div class="rng-top"><span class="rng-name">库存天数</span><div class="rng-track"><div class="rng-rail"></div><div class="rng-fill"></div><input type="range" data-role="min" min="0" max="50" step="1" value="0"><input type="range" data-role="max" min="0" max="50" step="1" value="50"></div></div><div class="rng-vals"><div class="rng-pill rmin"></div><span class="rng-dash"></span><div class="rng-pill rmax"></div></div></div></div><div class="frow sortbar"><span class="flabel">排序</span><button class="sortbtn on" data-key="price" data-dir="asc">价格 ↑</button><button class="sortbtn" data-key="stockdays" data-dir="desc">库存久</button><button class="sortbtn" data-key="drop" data-dir="desc">降价多</button></div><div class="frow"><span class="fcount">显示 <b>6</b> / 6 辆</span><button class="freset">重置筛选</button></div></div><div class="cards" id="cards-gx460_2022" data-limit="0" data-expanded="0"><a class="pcard" href="https://dubai.dubizzle.com/motors/used-cars/lexus/gx-series/2026/09/26/2023-lexus-gx-460-premier-gcc-specs-2-589---db3aeab87bff4bd0b39fbcd152a94bdf/" target="_blank" data-fav-id="gx460_2022:927765506523136383" data-fav-title="Lexus 2023 Lexus GX 460 Premier GCC Specs" data-fav-img="https://dbz-images.dubizzle.com/images/2026/09/26/cb2702d9c0484163a588e15b9157dce5-.jpg?impolicy=dpc" data-fav-shop="dubizzle" data-new="0" data-market-median="160000" data-model="Lexus 2023" data-oil="Petrol" data-color="" data-city="Blue Bay Tower" data-province="Dubai" data-price="160000" data-mileage="0" data-age="0" data-stockdays="48" data-drop="0"><div class="pcard-img"><img loading="lazy" src="https://dbz-images.dubizzle.com/images/2026/09/26/cb2702d9c0484163a588e15b9157dce5-.jpg?impolicy=dpc" alt=""><div class="pcard-spec">非GCC</div><button class="fav-toggle" type="button" aria-label="收藏车辆" aria-pressed="false">♡</button><button class="compare-toggle" type="button" aria-label="加入对比" aria-pressed="false">⇄</button></div><div class="pcard-b"><div class="pcard-price">AED 160,000</div><div class="pcard-title">Lexus 2023 Lexus GX 460 Premier GCC Specs</div><div class="pcard-meta"><span class="mi mi-good">0.0万km</span></div><div class="pcard-bottom"><span class="pcard-shop">dubizzle · 更新 2026-11-11</span><span class="sd sd-mid" data-date="2026-09-26">48天</span></div></div></a><a class="pcard" href="https://dubai.dubizzle.com/motors/used-cars/lexus/gx-series/2026/11/09/lexus-gx-460-2022-gcc-specs-in-excellent-c-2-976---08fa405916384ae4b31ea2255f155686/" target="_blank" data-fav-id="gx460_2022:440437678949139885" data-fav-title="Lexus GX 460" data-fav-img="https://dbz-images.dubizzle.com/images/2026/11/09/cc66ac9a855c4628a05a9def0017426e-.png?impolicy=dpv" data-fav-shop="dubizzle" data-new="0" data-market-median="165000" data-model="Lexus GX" data-oil="Petrol" data-color="" data-city="Ras Al Khor Industrial 3" data-province="Dubai" data-price="165000" data-mileage="0" data-age="0" data-stockdays="4" data-drop="0"><div class="pcard-img"><img loading="lazy" src="https://dbz-images.dubizzle.com/images/2026/11/09/cc66ac9a855c4628a05a9def0017426e-.png?impolicy=dpv" alt=""><div class="pcard-spec">非GCC</div><button class="fav-toggle" type="button" aria-label="收藏车辆" aria-pressed="false">♡</button><button class="compare-toggle" type="button" aria-label="加入对比" aria-pressed="false">⇄</button></div><div class="pcard-b"><div class="pcard-price">AED 165,000</div><div class="pcard-title">Lexus GX 460</div><div class="pcard-meta"><span class="mi mi-good">0.0万km</span></div><div class="pcard-bottom"><span class="pcard-shop">dubizzle · 更新 2026-11-11</span><span class="sd sd-fresh" data-date="2026-11-09">4天</span></div></div></a><a class="pcard" href="https://dubai.dubizzle.com/motors/used-cars/lexus/gx-series/2026/11/06/2022-lexus-gx460-platinum-gcc-full-agency--2-206---c8997b7ca64b44e4a8828ea5314fb5d5/" target="_blank" data-fav-id="gx460_2022:1033907371157433912" data-fav-title="Lexus 2022 LEXUS GX460 PLATINUM – GCC | FULL AGENCY HISTORY" data-fav-img="https://dbz-images.dubizzle.com/images/2026/11/06/798307f4ad0f4d2da8d522ba89884373-.jpg?impolicy=dpc" data-fav-shop="dubizzle" data-new="0" data-market-median="169500" data-model="Lexus 2022" data-oil="Petrol" data-color="" data-city="Oud Metha" data-province="Dubai" data-price="169500" data-mileage="0" data-age="0" data-stockdays="6" data-drop="0"><div class="pcard-img"><img loading="lazy" src="https://dbz-images.dubizzle.com/images/2026/11/06/798307f4ad0f4d2da8d522ba89884373-.jpg?impolicy=dpc" alt=""><div class="pcard-spec">非GCC</div><button class="fav-toggle" type="button" aria-label="收藏车辆" aria-pressed="false">♡</button><button class="compare-toggle" type="button" aria-label="加入对比" aria-pressed="false">⇄</button></div><div class="pcard-b"><div class="pcard-price">AED 169,500</div><div class="pcard-title">Lexus 2022 LEXUS GX460 PLATINUM – GCC | FULL AGENCY HISTORY</div><div class="pcard-meta"><span class="mi mi-good">0.0万km</span></div><div class="pcard-bottom"><span class="pcard-shop">dubizzle · 更新 2026-11-11</span><span class="sd sd-fresh" data-date="2026-11-07">6天</span></div></div></a><a class="pcard" href="https://dubai.dubizzle.com/motors/used-cars/lexus/gx-series/2026/10/25/2022-lexus-gx-460-premier-gcc-specs-2-591---655cc19bedf443a4911184353d6be641/" target="_blank" data-fav-id="gx460_2022:323845436496499897" data-fav-title="Lexus 2022 Lexus GX 460 Premier GCC Specs" data-fav-img="https://dbz-images.dubizzle.com/images/2026/10/25/9bb340ce0ae94bef9c4a46dc52085c33-.jpg?impolicy=dpc" data-fav-shop="dubizzle" data-new="0" data-market-median="185000" data-model="Lexus 2022" data-oil="Petrol" data-color="" data-city="Dubai" data-province="Dubai" data-price="185000" data-mileage="0" data-age="0" data-stockdays="18" data-drop="0"><div class="pcard-img"><img loading="lazy" src="https://dbz-images.dubizzle.com/images/2026/10/25/9bb340ce0ae94bef9c4a46dc52085c33-.jpg?impolicy=dpc" alt=""><div class="pcard-spec">非GCC</div><button class="fav-toggle" type="button" aria-label="收藏车辆" aria-pressed="false">♡</button><button class="compare-toggle" type="button" aria-label="加入对比" aria-pressed="false">⇄</button></div><div class="pcard-b"><div class="pcard-price">AED 185,000</div><div class="pcard-title">Lexus 2022 Lexus GX 460 Premier GCC Specs</div><div class="pcard-meta"><span class="mi mi-good">0.0万km</span></div><div class="pcard-bottom"><span class="pcard-shop">dubizzle · 更新 2026-11-11</span><span class="sd sd-fresh" data-date="2026-10-26">18天</span></div></div></a><a class="pcard" href="https://dubai.dubizzle.com/motors/used-cars/lexus/gx-series/2026/10/31/2023-lexus-gx-460-premier-feb2027-lexus-wa-2-515---402062060e6b4c7083ec10f7fe0d47b3/" target="_blank" data-fav-id="gx460_2022:1138519556324630160" data-fav-title="Lexus 2023 Lexus GX 460 Premier, Feb/2027 Lexus Warranty, Full Lexus Service History, GCC" data-fav-img="https://dbz-images.dubizzle.com/images/2026/10/31/124d99db424f4998a5ea6da7f204dcc9-.jpg?impolicy=dpv" data-fav-shop="dubizzle" data-new="0" data-market-median="189000" data-model="Lexus 2023" data-oil="Petrol" data-color="" data-city="Al Quoz Industrial Area 3" data-province="Dubai" data-price="189000" data-mileage="0" data-age="0" data-stockdays="12" data-drop="0"><div class="pcard-img"><img loading="lazy" src="https://dbz-images.dubizzle.com/images/2026/10/31/124d99db424f4998a5ea6da7f204dcc9-.jpg?impolicy=dpv" alt=""><div class="pcard-spec">非GCC</div><button class="fav-toggle" type="button" aria-label="收藏车辆" aria-pressed="false">♡</button><button class="compare-toggle" type="button" aria-label="加入对比" aria-pressed="false">⇄</button></div><div class="pcard-b"><div class="pcard-price">AED 189,000</div><div class="pcard-title">Lexus 2023 Lexus GX 460 Premier, Feb/2027 Lexus Warranty, Full Lexus Service History, GCC</div><div class="pcard-meta"><span class="mi mi-good">0.0万km</span></div><div class="pcard-bottom"><span class="pcard-shop">dubizzle · 更新 2026-11-11</span><span class="sd sd-fresh" data-date="2026-11-01">12天</span></div></div></a><a class="pcard" href="https://dubai.dubizzle.com/motors/used-cars/lexus/gx-series/2026/10/30/aed-2887month-2023-lexus-gx-series-gx-460--2-322---212f785b664a4457b9934ee374885eb8/" target="_blank" data-fav-id="gx460_2022:1052733837392285668" data-fav-title="Lexus AED 2887/month | 2023 Lexus GX-Series GX 460 Premier | GCC Specs | Ref#544255" data-fav-img="https://dbz-images.dubizzle.com/images/2026/10/30/e81b7fc839dc43ecb3fab7cab4667d4e-.jpg?impolicy=dpv" data-fav-shop="dubizzle" data-new="0" data-market-median="189999" data-model="Lexus AED" data-oil="Petrol" data-color="" data-city="Al Barsha" data-province="Dubai" data-price="189999" data-mileage="0" data-age="0" data-stockdays="14" data-drop="0"><div class="pcard-img"><img loading="lazy" src="https://dbz-images.dubizzle.com/images/2026/10/30/e81b7fc839dc43ecb3fab7cab4667d4e-.jpg?impolicy=dpv" alt=""><div class="pcard-spec">非GCC</div><button class="fav-toggle" type="button" aria-label="收藏车辆" aria-pressed="false">♡</button><button class="compare-toggle" type="button" aria-label="加入对比" aria-pressed="false">⇄</button></div><div class="pcard-b"><div class="pcard-price">AED 189,999</div><div class="pcard-title">Lexus AED 2887/month | 2023 Lexus GX-Series GX 460 Premier | GCC Specs | Ref#544255</div><div class="pcard-meta"><span class="mi mi-good">0.0万km</span></div><div class="pcard-bottom"><span class="pcard-shop">dubizzle · 更新 2026-11-11</span><span class="sd sd-fresh" data-date="2026-10-30">14天</span></div></div></a></div>
     </div>
     </div>
 
@@ -373,7 +393,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     
     </div>
     </div>
-    </div><p class="foot">自动生成于 2026-11-12 04:24。价格单位 AED；卡片显示公里数，并标注 GCC Specs / 非GCC或未标明。</p></div><script>
+    </div><p class="foot">自动生成于 2026-11-12 04:31。价格单位 AED；卡片显示公里数，并标注 GCC Specs / 非GCC或未标明。</p></div><script>
 (function(){
   // 字号调节：标准/大字/超大，设置会在同源所有报告页之间保留。
   (function(){
@@ -556,6 +576,27 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     rng.querySelector('.rmin').textContent=fmtVal(fmt,a,false);
     rng.querySelector('.rmax').textContent=fmtVal(fmt,b,b>=MAX);
   }
+  function filterStoreKey(box){return 'vehicle_filter_v1|'+location.pathname+'|'+box.dataset.target;}
+  function persistFilter(box){
+    var state={groups:{},ranges:{}};
+    box.querySelectorAll('[data-group].on').forEach(function(c){
+      (state.groups[c.dataset.group]=state.groups[c.dataset.group]||[]).push(c.dataset.value);
+    });
+    box.querySelectorAll('.rng').forEach(function(r){var i=r.querySelectorAll('input');state.ranges[r.dataset.field]=[i[0].value,i[1].value];});
+    var sort=box.querySelector('.sortbtn.on');if(sort)state.sort=[sort.dataset.key,sort.dataset.dir];
+    try{localStorage.setItem(filterStoreKey(box),JSON.stringify(state));}catch(e){}
+  }
+  function restoreFilter(box){
+    var state;try{state=JSON.parse(localStorage.getItem(filterStoreKey(box))||'null');}catch(e){}if(!state)return;
+    Object.keys(state.groups||{}).forEach(function(g){
+      (state.groups[g]||[]).forEach(function(v){
+        box.querySelectorAll('[data-group="'+g+'"]').forEach(function(b){if(b.dataset.value===v)b.classList.add('on');});
+      });
+      if(g==='city'&&state.groups[g].length){var all=box.querySelector('[data-city-all]');if(all)all.classList.remove('on');}
+    });
+    box.querySelectorAll('.rng').forEach(function(r){var v=(state.ranges||{})[r.dataset.field],i=r.querySelectorAll('input');if(v){i[0].value=v[0];i[1].value=v[1];}});
+    if(state.sort){box.querySelectorAll('.sortbtn').forEach(function(b){b.classList.toggle('on',b.dataset.key===state.sort[0]&&b.dataset.dir===state.sort[1]);});}
+  }
   function apply(box){
     var cards=document.getElementById(box.dataset.target); if(!cards)return;
     var groups={};
@@ -592,9 +633,11 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       if(!expanded&&limit&&matched>limit){more.style.display='';more.textContent='展开全部（还有 '+(matched-limit)+' 辆）';}
       else more.style.display='none';
     }
+    persistFilter(box);
   }
   document.querySelectorAll('.filters').forEach(function(box){
     var cards=document.getElementById(box.dataset.target);
+    restoreFilter(box);
     box.querySelectorAll('button[data-group]').forEach(function(c){
       c.addEventListener('click',function(){
         c.classList.toggle('on');
@@ -646,6 +689,12 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
         cards.dataset.expanded='0'; apply(box);
       });
     });
+    var chosenSort=sb&&sb.querySelector('.sortbtn.on');
+    if(chosenSort&&cards){
+      var sk=chosenSort.dataset.key,sd=chosenSort.dataset.dir==='desc'?-1:1;
+      Array.prototype.slice.call(cards.children).sort(function(a,c){return ((+a.dataset[sk]||0)-(+c.dataset[sk]||0))*sd;})
+        .forEach(function(el){cards.appendChild(el);});
+    }
     apply(box);
   });
 
@@ -663,8 +712,10 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     items.forEach(function(x){
       var card=live[x.key];
       if(card){
+        var current=+card.dataset.price||0;
+        if(x.price&&current&&current!==x.price){x.previousPrice=x.price;x.priceChangedAt=now;x.priceDrop=x.price-current;x.alertSeen=false;}
         x.title=card.dataset.favTitle||x.title;x.img=card.dataset.favImg||x.img;
-        x.shop=card.dataset.favShop||x.shop;x.price=+card.dataset.price||x.price;
+        x.shop=card.dataset.favShop||x.shop;x.price=current||x.price;
         x.link=card.href||x.link;delete x.delistedAt;
       }else if(x.sourcePath===path&&!x.delistedAt)x.delistedAt=now;
     });
@@ -684,6 +735,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
         b.setAttribute('aria-label',on?'取消收藏':'收藏车辆');
       });
       count.textContent=items.length;
+      float.classList.toggle('has-alert',items.some(function(x){return x.priceDrop>0&&!x.alertSeen;}));
     }
     function render(){
       if(!items.length){list.innerHTML='<div class="fav-empty"><div class="fav-empty-icon">♡</div><strong>还没有收藏车辆</strong><span>点击车源图片右上角的爱心，喜欢的车会保存在这里。</span></div>';return;}
@@ -692,10 +744,15 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
         return '<article class="fav-item'+(down?' delisted':'')+'"><span class="fav-index">'+(idx+1)+'</span><button class="fav-remove" data-remove="'+esc(x.key)+'" type="button" aria-label="取消收藏">×</button>'+
           '<a href="'+esc(x.link||'#')+'" target="_blank"><div class="fav-photo">'+(x.img?'<img loading="lazy" src="'+esc(x.img)+'" alt="">':'')+
           '<div class="fav-down">已下架</div></div><div class="fav-info"><div class="fav-price">'+money(x.price)+'</div><div class="fav-title">'+esc(x.title)+'</div>'+
-          '<div class="fav-meta">'+esc(x.shop||'')+(down?' · 下架后保留 '+days+' 天':'')+'</div></div></a></article>';
+          (x.priceDrop>0?'<div class="fav-drop">较收藏价降 '+money(x.priceDrop)+'</div>':'')+
+          '<div class="fav-meta">'+esc(x.shop||'')+(down?' · 下架后保留 '+days+' 天':'')+'</div></div></a>'+
+          '<textarea class="fav-note" data-note="'+esc(x.key)+'" placeholder="添加备注，如：已联系、待验车">'+esc(x.note||'')+'</textarea></article>';
       }).join('');
       list.querySelectorAll('[data-remove]').forEach(function(b){b.addEventListener('click',function(){
         items=items.filter(function(x){return x.key!==b.dataset.remove;});write(items);syncButtons();render();
+      });});
+      list.querySelectorAll('[data-note]').forEach(function(n){n.addEventListener('change',function(){
+        items.forEach(function(x){if(x.key===n.dataset.note)x.note=n.value;});write(items);
       });});
     }
     document.querySelectorAll('.fav-toggle').forEach(function(b){b.addEventListener('click',function(e){
@@ -707,11 +764,51 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       write(items);syncButtons();render();
     });});
     function close(){overlay.classList.remove('open');document.body.style.overflow='';}
-    float.addEventListener('click',function(){now=Date.now();render();overlay.classList.add('open');document.body.style.overflow='hidden';});
+    float.addEventListener('click',function(){now=Date.now();items.forEach(function(x){x.alertSeen=true;});write(items);syncButtons();render();overlay.classList.add('open');document.body.style.overflow='hidden';});
     overlay.querySelector('.fav-close').addEventListener('click',close);
     overlay.addEventListener('click',function(e){if(e.target===overlay)close();});
     document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
     syncButtons();render();
+  })();
+
+  // 当前页面车辆对比：最多4辆，不写入服务器。
+  (function(){
+    var selected=[];
+    var bar=document.createElement('div');bar.className='compare-bar';
+    bar.innerHTML='<span class="compare-label">已选 0/4</span><button class="compare-clear" type="button">清空</button><button class="compare-open" type="button">开始对比</button>';
+    var overlay=document.createElement('div');overlay.className='fav-overlay compare-overlay';overlay.setAttribute('role','dialog');overlay.setAttribute('aria-modal','true');
+    overlay.innerHTML='<div class="fav-sheet"><div class="fav-head"><h2>车辆对比</h2><button class="fav-close" type="button" aria-label="关闭">×</button></div><div class="compare-table-wrap"></div></div>';
+    document.body.appendChild(bar);document.body.appendChild(overlay);
+    function update(){
+      document.querySelectorAll('.compare-toggle').forEach(function(b){var on=selected.indexOf(b.closest('.pcard'))>=0;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');});
+      bar.classList.toggle('show',selected.length>0);bar.querySelector('.compare-label').textContent='已选 '+selected.length+'/4';
+    }
+    document.querySelectorAll('.compare-toggle').forEach(function(b){b.addEventListener('click',function(e){
+      e.preventDefault();e.stopPropagation();var card=b.closest('.pcard'),i=selected.indexOf(card);
+      if(i>=0)selected.splice(i,1);else if(selected.length<4)selected.push(card);else{b.textContent='!';setTimeout(function(){b.textContent='⇄';},700);}
+      update();
+    });});
+    bar.querySelector('.compare-clear').addEventListener('click',function(){selected=[];update();});
+    function cell(card,field){
+      if(field==='title')return card.dataset.favTitle||'';
+      if(field==='price')return '¥'+Number(card.dataset.price||0).toLocaleString('en-US');
+      if(field==='mileage')return (Number(card.dataset.mileage||0)/10000).toFixed(1)+'万km';
+      if(field==='shop')return card.dataset.favShop||'';
+      if(field==='emission'){var e=card.querySelector('.emission');return e?e.textContent:'-';}
+      if(field==='stockdays')return (card.dataset.stockdays||0)+'天';
+      if(field==='market')return card.dataset.marketMedian&&+card.dataset.marketMedian?'¥'+Number(card.dataset.marketMedian).toLocaleString('en-US'):'-';
+      return '-';
+    }
+    bar.querySelector('.compare-open').addEventListener('click',function(){
+      var rows=[['车型','title'],['售价','price'],['里程','mileage'],['排放','emission'],['库存天数','stockdays'],['同款中位价','market'],['来源','shop']];
+      var html='<table class="compare-table"><tr><th>项目</th>'+selected.map(function(c){return '<th>'+escCompare(cell(c,'title'))+'</th>';}).join('')+'</tr>';
+      rows.slice(1).forEach(function(r){html+='<tr><th>'+r[0]+'</th>'+selected.map(function(c){return '<td>'+escCompare(cell(c,r[1]))+'</td>';}).join('')+'</tr>';});
+      html+='</table>';overlay.querySelector('.compare-table-wrap').innerHTML=html;overlay.classList.add('open');document.body.style.overflow='hidden';
+    });
+    function escCompare(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+    function close(){overlay.classList.remove('open');document.body.style.overflow='';}
+    overlay.querySelector('.fav-close').addEventListener('click',close);overlay.addEventListener('click',function(e){if(e.target===overlay)close();});
+    update();
   })();
 
   // 库存天数/价格历史：点击弹提示(手机无hover),不触发卡片跳转;点别处关闭
