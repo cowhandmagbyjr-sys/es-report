@@ -243,11 +243,13 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .delisted.open>.delisted-toggle::after{content:"收起"}
 .delisted-content{display:none}
 .delisted.open>.delisted-content{display:block;padding-top:12px}
-.delisted-filter{display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 12px;border:1px solid var(--border);
+.delisted-filter{display:flex;align-items:flex-start;gap:10px;margin:12px 0;padding:10px 12px;border:1px solid var(--border);
   border-radius:13px;background:var(--surface)}
-.delisted-filter label{font-size:.78rem;font-weight:650;color:var(--ink2)}
-.delisted-model{min-height:38px;max-width:230px;padding:7px 34px 7px 11px;border:1px solid var(--border);border-radius:10px;
-  background:var(--page);color:var(--ink);font:inherit;font-size:.8rem}.delisted-count{margin-left:auto;color:var(--muted);font-size:.75rem}
+.delisted-label{padding-top:7px;font-size:.78rem;font-weight:650;color:var(--ink2);white-space:nowrap}
+.delisted-tabs{display:flex;flex:1;flex-wrap:wrap;gap:6px}.dmodel{min-height:34px;padding:6px 11px;border:1px solid var(--border);
+  border-radius:999px;background:var(--page);color:var(--ink2);font:inherit;font-size:.76rem;cursor:pointer}
+.dmodel.on{border-color:var(--ink);background:var(--ink);color:var(--surface)}
+.delisted-count{padding-top:7px;margin-left:auto;color:var(--muted);font-size:.75rem;white-space:nowrap}
 
 @media (max-width:560px){
   .wrap{padding:0 12px 60px}
@@ -314,6 +316,8 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
   place-items:center;width:68px;height:68px;margin:0 auto 14px;border-radius:50%;background:var(--pill);color:#e53935;font-size:32px}
 .fav-empty strong{display:block;color:var(--ink);font-size:1rem;margin-bottom:5px}
 @media(max-width:560px){
+  .delisted-filter{display:grid;grid-template-columns:auto 1fr;gap:8px}.delisted-tabs{grid-column:1/-1}
+  .delisted-count{grid-column:2;grid-row:1;padding-top:7px;text-align:right}
   .fav-overlay{padding:0}.fav-sheet{max-height:88vh;padding:14px;border-radius:22px 22px 0 0}
   .fav-head{top:-14px;margin:-14px -14px 12px;padding:15px 14px}
   .fav-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.fav-info{padding:9px 10px 11px}
@@ -343,7 +347,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">21.5万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">21.7万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">22.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">22.3万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">22.5万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 136.0, "22.0万", "11-10"], [277.0, 136.0, "22.0万", "11-11"], [542.0, 136.0, "22.0万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,136.0 277.0,136.0 542.0,136.0" class="line-s1"/><circle cx="12.0" cy="136.0" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-10</text><circle cx="277.0" cy="136.0" r="3.5" class="dot-s1"/><text x="277.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="136.0" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -365,7 +369,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       <tr><td>2026年上牌 · 雷克萨斯 ES300h</td><td class="num">1</td><td class="num">¥265,000</td><td class="num">¥265,000</td><td class="num">¥265,000</td></tr><tr><td>2024年上牌 · 雷克萨斯ES300h 卓越版</td><td class="num">1</td><td class="num">¥220,000</td><td class="num">¥220,000</td><td class="num">¥220,000</td></tr><tr><td>2010年上牌 · 雷克萨斯ES240 典雅版</td><td class="num">1</td><td class="num">¥53,000</td><td class="num">¥53,000</td><td class="num">¥53,000</td></tr></table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-lexus_ls">
@@ -384,7 +388,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">-0.0万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 232.8, "0.0万", "11-11"], [542.0, 232.8, "0.0万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,232.8 542.0,232.8" class="line-s1"/><circle cx="12.0" cy="232.8" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="232.8" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -406,7 +410,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       </table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-camry">
@@ -425,7 +429,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">13.0万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">13.2万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">13.3万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">13.5万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">13.7万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 136.0, "13.3万", "11-10"], [277.0, 136.0, "13.3万", "11-11"], [542.0, 136.0, "13.3万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,136.0 277.0,136.0 542.0,136.0" class="line-s1"/><circle cx="12.0" cy="136.0" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-10</text><circle cx="277.0" cy="136.0" r="3.5" class="dot-s1"/><text x="277.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="136.0" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -447,7 +451,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       <tr><td>2021款 · 丰田凯美瑞 2021款 双擎 2.5HG 豪华版</td><td class="num">1</td><td class="num">¥116,800</td><td class="num">¥116,800</td><td class="num">¥116,800</td></tr><tr><td>2026款 · 丰田凯美瑞 2026款 双擎 2.0HGVP 豪华版</td><td class="num">1</td><td class="num">¥149,800</td><td class="num">¥149,800</td><td class="num">¥149,800</td></tr></table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-crown">
@@ -466,7 +470,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">6.6万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">6.7万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">6.8万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">6.9万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">7.0万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 136.0, "6.8万", "11-10"], [277.0, 136.0, "6.8万", "11-11"], [542.0, 136.0, "6.8万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,136.0 277.0,136.0 542.0,136.0" class="line-s1"/><circle cx="12.0" cy="136.0" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-10</text><circle cx="277.0" cy="136.0" r="3.5" class="dot-s1"/><text x="277.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="136.0" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -488,7 +492,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       <tr><td>2011年上牌 · 皇冠 2.5L RoyaI</td><td class="num">2</td><td class="num">¥65,000</td><td class="num">¥67,500</td><td class="num">¥70,000</td></tr><tr><td>2008年上牌 · 皇冠 特别版</td><td class="num">1</td><td class="num">¥68,000</td><td class="num">¥68,000</td><td class="num">¥68,000</td></tr><tr><td>2013年上牌 · 皇冠 Royal</td><td class="num">1</td><td class="num">¥52,000</td><td class="num">¥52,000</td><td class="num">¥52,000</td></tr><tr><td>2009年上牌 · 皇冠 导航版</td><td class="num">1</td><td class="num">¥33,000</td><td class="num">¥33,000</td><td class="num">¥33,000</td></tr><tr><td>2026年上牌 · 丰田 皇冠（日规）</td><td class="num">1</td><td class="num">¥218,000</td><td class="num">¥218,000</td><td class="num">¥218,000</td></tr><tr><td>2014年上牌 · 皇冠 RoyaI</td><td class="num">1</td><td class="num">¥83,000</td><td class="num">¥83,000</td><td class="num">¥83,000</td></tr><tr><td>2006年上牌 · 皇冠 真皮版</td><td class="num">1</td><td class="num">¥58,000</td><td class="num">¥58,000</td><td class="num">¥58,000</td></tr><tr><td>2016年上牌 · 皇冠 2.0T 时尚版</td><td class="num">1</td><td class="num">¥85,000</td><td class="num">¥85,000</td><td class="num">¥85,000</td></tr></table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-byd_han">
@@ -507,7 +511,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">8.8万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">8.9万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">9.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">9.1万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">9.2万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 136.0, "9.0万", "11-10"], [277.0, 136.0, "9.0万", "11-11"], [542.0, 136.0, "9.0万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,136.0 277.0,136.0 542.0,136.0" class="line-s1"/><circle cx="12.0" cy="136.0" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-10</text><circle cx="277.0" cy="136.0" r="3.5" class="dot-s1"/><text x="277.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="136.0" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -529,7 +533,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       <tr><td>2020款 · 比亚迪汉 2020款 EV 四驱高性能版旗舰型</td><td class="num">1</td><td class="num">¥89,800</td><td class="num">¥89,800</td><td class="num">¥89,800</td></tr></table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-zeekr_007">
@@ -548,7 +552,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">-0.0万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 232.8, "0.0万", "11-10"], [277.0, 232.8, "0.0万", "11-11"], [542.0, 232.8, "0.0万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,232.8 277.0,232.8 542.0,232.8" class="line-s1"/><circle cx="12.0" cy="232.8" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-10</text><circle cx="277.0" cy="232.8" r="3.5" class="dot-s1"/><text x="277.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="232.8" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -570,7 +574,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       </table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-zeekr_001">
@@ -589,7 +593,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">-0.0万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 232.8, "0.0万", "11-10"], [277.0, 232.8, "0.0万", "11-11"], [542.0, 232.8, "0.0万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,232.8 277.0,232.8 542.0,232.8" class="line-s1"/><circle cx="12.0" cy="232.8" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-10</text><circle cx="277.0" cy="232.8" r="3.5" class="dot-s1"/><text x="277.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="232.8" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -611,7 +615,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       </table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-zeekr_7x">
@@ -630,7 +634,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">-0.0万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 232.8, "0.0万", "11-10"], [277.0, 232.8, "0.0万", "11-11"], [542.0, 232.8, "0.0万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,232.8 277.0,232.8 542.0,232.8" class="line-s1"/><circle cx="12.0" cy="232.8" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-10</text><circle cx="277.0" cy="232.8" r="3.5" class="dot-s1"/><text x="277.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="232.8" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -652,7 +656,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       </table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-galaxy_starry8">
@@ -671,7 +675,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">-0.0万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 232.8, "0.0万", "11-11"], [542.0, 232.8, "0.0万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,232.8 542.0,232.8" class="line-s1"/><circle cx="12.0" cy="232.8" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="232.8" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -693,7 +697,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       </table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-audi_all">
@@ -712,7 +716,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">11.4万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">11.5万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">11.7万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">11.8万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">12.0万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 136.0, "11.7万", "11-11"], [542.0, 136.0, "11.7万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,136.0 542.0,136.0" class="line-s1"/><circle cx="12.0" cy="136.0" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="136.0" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -734,7 +738,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       <tr><td>2025款 · 奥迪Q2L 2025款 35TFSI 时尚动感型</td><td class="num">1</td><td class="num">¥129,800</td><td class="num">¥129,800</td><td class="num">¥129,800</td></tr><tr><td>2022款 · 奥迪Q3 2022款 40 TFSI 时尚动感型</td><td class="num">1</td><td class="num">¥103,800</td><td class="num">¥103,800</td><td class="num">¥103,800</td></tr></table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-benz_all">
@@ -753,7 +757,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">44.7万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">45.2万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">45.8万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">46.4万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">46.9万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 136.0, "45.8万", "11-11"], [542.0, 136.0, "45.8万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,136.0 542.0,136.0" class="line-s1"/><circle cx="12.0" cy="136.0" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="136.0" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -775,7 +779,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       <tr><td>2020年上牌 · 奔驰S350L 商务型臻藏版</td><td class="num">3</td><td class="num">¥330,000</td><td class="num">¥345,000</td><td class="num">¥378,000</td></tr><tr><td>2023年上牌 · 改款 奔驰S400L 商务型</td><td class="num">3</td><td class="num">¥463,000</td><td class="num">¥498,000</td><td class="num">¥528,000</td></tr><tr><td>2023年上牌 · 改款 奔驰S400L 豪华型</td><td class="num">2</td><td class="num">¥506,000</td><td class="num">¥547,000</td><td class="num">¥588,000</td></tr><tr><td>2007年上牌 · 奔驰S500</td><td class="num">1</td><td class="num">¥158,000</td><td class="num">¥158,000</td><td class="num">¥158,000</td></tr><tr><td>2023年上牌 · 奔驰S450eL 插电式混合动力轿车</td><td class="num">1</td><td class="num">¥528,000</td><td class="num">¥528,000</td><td class="num">¥528,000</td></tr><tr><td>2015年上牌 · 奔驰S500 4MATIC 轿跑版</td><td class="num">1</td><td class="num">¥688,000</td><td class="num">¥688,000</td><td class="num">¥688,000</td></tr><tr><td>2003年上牌 · 奔驰S320</td><td class="num">1</td><td class="num">¥238,000</td><td class="num">¥238,000</td><td class="num">¥238,000</td></tr><tr><td>2020年上牌 · 奔驰S350L 尊享型臻藏版</td><td class="num">1</td><td class="num">¥373,000</td><td class="num">¥373,000</td><td class="num">¥373,000</td></tr><tr><td>2025年上牌 · 改款 奔驰S400L 商务型</td><td class="num">1</td><td class="num">¥603,000</td><td class="num">¥603,000</td><td class="num">¥603,000</td></tr><tr><td>2005年上牌 · 奔驰S280</td><td class="num">1</td><td class="num">¥198,000</td><td class="num">¥198,000</td><td class="num">¥198,000</td></tr><tr><td>2021年上牌 · 奔驰S450L 4MATIC</td><td class="num">1</td><td class="num">¥613,000</td><td class="num">¥613,000</td><td class="num">¥613,000</td></tr><tr><td>2022年上牌 · 改款 奔驰S400L 豪华型</td><td class="num">1</td><td class="num">¥578,000</td><td class="num">¥578,000</td><td class="num">¥578,000</td></tr><tr><td>2018年上牌 · 奔驰S320L</td><td class="num">1</td><td class="num">¥318,000</td><td class="num">¥318,000</td><td class="num">¥318,000</td></tr><tr><td>2011年上牌 · 奔驰 S500L 4MATIC</td><td class="num">1</td><td class="num">¥168,000</td><td class="num">¥168,000</td><td class="num">¥168,000</td></tr><tr><td>2007年上牌 · 奔驰S350</td><td class="num">1</td><td class="num">¥108,000</td><td class="num">¥108,000</td><td class="num">¥108,000</td></tr><tr><td>2013年上牌 · 奔驰S600L Grand Edition designo</td><td class="num">1</td><td class="num">¥238,000</td><td class="num">¥238,000</td><td class="num">¥238,000</td></tr><tr><td>2011年上牌 · 奔驰S350L 豪华版</td><td class="num">1</td><td class="num">¥108,000</td><td class="num">¥108,000</td><td class="num">¥108,000</td></tr><tr><td>2022年上牌 · 奔驰S450L 4MATIC</td><td class="num">1</td><td class="num">¥643,000</td><td class="num">¥643,000</td><td class="num">¥643,000</td></tr><tr><td>2021年上牌 · 奔驰S400L 豪华型</td><td class="num">1</td><td class="num">¥458,000</td><td class="num">¥458,000</td><td class="num">¥458,000</td></tr><tr><td>2024年上牌 · 奔驰 G 350</td><td class="num">1</td><td class="num">¥1,138,000</td><td class="num">¥1,138,000</td><td class="num">¥1,138,000</td></tr><tr><td>2024年上牌 · 改款 奔驰S400L 豪华型</td><td class="num">1</td><td class="num">¥598,000</td><td class="num">¥598,000</td><td class="num">¥598,000</td></tr><tr><td>2023年上牌 · 奔驰S400L 商务型</td><td class="num">1</td><td class="num">¥508,000</td><td class="num">¥508,000</td><td class="num">¥508,000</td></tr><tr><td>2022年上牌 · 奔驰S500 4MATIC 美规</td><td class="num">1</td><td class="num">¥658,000</td><td class="num">¥658,000</td><td class="num">¥658,000</td></tr><tr><td>2015款 · 奔驰GLA级 2015款 GLA 220 4MATIC 豪华型</td><td class="num">1</td><td class="num">¥49,800</td><td class="num">¥49,800</td><td class="num">¥49,800</td></tr><tr><td>2017年上牌 · 奔驰S400L</td><td class="num">1</td><td class="num">¥285,000</td><td class="num">¥285,000</td><td class="num">¥285,000</td></tr><tr><td>2015年上牌 · 奔驰S320L 商务型</td><td class="num">1</td><td class="num">¥88,000</td><td class="num">¥88,000</td><td class="num">¥88,000</td></tr></table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-bmw_all">
@@ -794,7 +798,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">17.9万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">18.2万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">18.4万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">18.6万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">18.9万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 136.0, "18.4万", "11-11"], [542.0, 136.0, "18.4万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,136.0 542.0,136.0" class="line-s1"/><circle cx="12.0" cy="136.0" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="136.0" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -816,7 +820,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       <tr><td>2024年上牌 · 宝马X5 xDrive40Li M运动曜夜套装</td><td class="num">6</td><td class="num">¥390,000</td><td class="num">¥442,500</td><td class="num">¥485,000</td></tr><tr><td>2026款 · 宝马X1 2026款 sDrive25Li X设计套装</td><td class="num">6</td><td class="num">¥169,800</td><td class="num">¥169,800</td><td class="num">¥169,800</td></tr><tr><td>2022年上牌 · 宝马X5 xDrive30i M运动套装</td><td class="num">3</td><td class="num">¥265,000</td><td class="num">¥288,000</td><td class="num">¥298,000</td></tr><tr><td>2018年上牌 · 宝马X5 xDrive35i 典雅型</td><td class="num">1</td><td class="num">¥178,000</td><td class="num">¥178,000</td><td class="num">¥178,000</td></tr><tr><td>2019年上牌 · 宝马530Li 领先型 M运动套装</td><td class="num">2</td><td class="num">¥103,000</td><td class="num">¥125,500</td><td class="num">¥148,000</td></tr><tr><td>2019年上牌 · 宝马X5 xDrive40i M运动套装</td><td class="num">2</td><td class="num">¥268,000</td><td class="num">¥270,500</td><td class="num">¥273,000</td></tr><tr><td>2019年上牌 · 宝马530Li 领先型豪华套装</td><td class="num">1</td><td class="num">¥145,000</td><td class="num">¥145,000</td><td class="num">¥145,000</td></tr><tr><td>2023年上牌 · 宝马530i 改款 M运动套装</td><td class="num">1</td><td class="num">¥190,000</td><td class="num">¥190,000</td><td class="num">¥190,000</td></tr><tr><td>2019年上牌 · 宝马X5 xDrive35i M豪华运动型</td><td class="num">1</td><td class="num">¥128,000</td><td class="num">¥128,000</td><td class="num">¥128,000</td></tr><tr><td>2020年上牌 · 宝马525Li 豪华套装</td><td class="num">1</td><td class="num">¥125,000</td><td class="num">¥125,000</td><td class="num">¥125,000</td></tr><tr><td>2025年上牌 · 宝马X6 M 雷霆版</td><td class="num">1</td><td class="num">¥850,000</td><td class="num">¥850,000</td><td class="num">¥850,000</td></tr><tr><td>2020年上牌 · 宝马530Li 尊享型 M运动套装</td><td class="num">1</td><td class="num">¥178,000</td><td class="num">¥178,000</td><td class="num">¥178,000</td></tr><tr><td>2022年上牌 · 宝马530Li 改款 领先型M运动套装</td><td class="num">1</td><td class="num">¥193,000</td><td class="num">¥193,000</td><td class="num">¥193,000</td></tr><tr><td>2021年上牌 · 宝马X5 xDrive40i 改款 M运动套装</td><td class="num">1</td><td class="num">¥338,000</td><td class="num">¥338,000</td><td class="num">¥338,000</td></tr><tr><td>2021年上牌 · 宝马530Li 领先型 M运动套装</td><td class="num">1</td><td class="num">¥195,000</td><td class="num">¥195,000</td><td class="num">¥195,000</td></tr><tr><td>2018年上牌 · 宝马530Li 尊享型M运动套装</td><td class="num">1</td><td class="num">¥143,000</td><td class="num">¥143,000</td><td class="num">¥143,000</td></tr><tr><td>2021年上牌 · 宝马525Li M运动套装</td><td class="num">1</td><td class="num">¥183,000</td><td class="num">¥183,000</td><td class="num">¥183,000</td></tr><tr><td>2020年上牌 · 宝马X5 xDrive40e 美规</td><td class="num">1</td><td class="num">¥128,000</td><td class="num">¥128,000</td><td class="num">¥128,000</td></tr><tr><td>2019款 · 宝马5系新能源 2019款 530Le 豪华套装</td><td class="num">1</td><td class="num">¥109,800</td><td class="num">¥109,800</td><td class="num">¥109,800</td></tr><tr><td>2017年上牌 · 宝马X5 xDrive28i</td><td class="num">1</td><td class="num">¥100,000</td><td class="num">¥100,000</td><td class="num">¥100,000</td></tr><tr><td>2025年上牌 · 宝马X5 xDrive30Li 尊享型 M运动套装</td><td class="num">1</td><td class="num">¥398,000</td><td class="num">¥398,000</td><td class="num">¥398,000</td></tr><tr><td>2021款 · 宝马X1 2021款 sDrive20Li 尊享型 国VI</td><td class="num">1</td><td class="num">¥88,800</td><td class="num">¥88,800</td><td class="num">¥88,800</td></tr><tr><td>2019年上牌 · 宝马530Li 改款 领先型 M运动套装</td><td class="num">1</td><td class="num">¥165,000</td><td class="num">¥165,000</td><td class="num">¥165,000</td></tr><tr><td>2009年上牌 · 宝马520Li 领先型</td><td class="num">1</td><td class="num">¥48,000</td><td class="num">¥48,000</td><td class="num">¥48,000</td></tr><tr><td>2022年上牌 · 宝马530i M运动套装</td><td class="num">1</td><td class="num">¥193,000</td><td class="num">¥193,000</td><td class="num">¥193,000</td></tr><tr><td>2019年上牌 · 宝马530Li 尊享型 豪华套装</td><td class="num">1</td><td class="num">¥128,000</td><td class="num">¥128,000</td><td class="num">¥128,000</td></tr><tr><td>2021年上牌 · 宝马530Li 改款 领先型 豪华套装</td><td class="num">1</td><td class="num">¥175,000</td><td class="num">¥175,000</td><td class="num">¥175,000</td></tr><tr><td>2021年上牌 · 宝马530Li 尊享型 M运动套装</td><td class="num">1</td><td class="num">¥195,000</td><td class="num">¥195,000</td><td class="num">¥195,000</td></tr><tr><td>2017年上牌 · 宝马530Li 领先型豪华套装</td><td class="num">1</td><td class="num">¥113,000</td><td class="num">¥113,000</td><td class="num">¥113,000</td></tr><tr><td>2023年上牌 · 宝马X5 xDrive40Li M运动曜夜套装</td><td class="num">1</td><td class="num">¥483,000</td><td class="num">¥483,000</td><td class="num">¥483,000</td></tr><tr><td>2015年上牌 · 宝马X5 xDrive35i 典雅型</td><td class="num">1</td><td class="num">¥90,000</td><td class="num">¥90,000</td><td class="num">¥90,000</td></tr><tr><td>2024年上牌 · 宝马X5 xDrive40Li M运动套装</td><td class="num">1</td><td class="num">¥448,000</td><td class="num">¥448,000</td><td class="num">¥448,000</td></tr><tr><td>2023年上牌 · 宝马X5 xDrive40Li 尊享型M运动套装</td><td class="num">1</td><td class="num">¥415,000</td><td class="num">¥415,000</td><td class="num">¥415,000</td></tr><tr><td>2023年上牌 · 宝马X5 改款 xDrive30Li 尊享型 M运动套装</td><td class="num">1</td><td class="num">¥308,000</td><td class="num">¥308,000</td><td class="num">¥308,000</td></tr><tr><td>2025年上牌 · 宝马X5 xDrive30Li 尊享型M运动曜夜套装</td><td class="num">1</td><td class="num">¥423,000</td><td class="num">¥423,000</td><td class="num">¥423,000</td></tr><tr><td>2020年上牌 · 宝马X5 xDrive40i 尊享型M运动套装</td><td class="num">1</td><td class="num">¥303,000</td><td class="num">¥303,000</td><td class="num">¥303,000</td></tr><tr><td>2020款 · 宝马1系 2020款 120i M运动套装 国VI</td><td class="num">1</td><td class="num">¥59,800</td><td class="num">¥59,800</td><td class="num">¥59,800</td></tr><tr><td>2025款 · 宝马3系 2025款 330Li M运动曜夜套装</td><td class="num">1</td><td class="num">¥215,800</td><td class="num">¥215,800</td><td class="num">¥215,800</td></tr><tr><td>2017年上牌 · 宝马528Li 上市特别版</td><td class="num">1</td><td class="num">¥135,000</td><td class="num">¥135,000</td><td class="num">¥135,000</td></tr><tr><td>2021款 · 宝马X2 2021款 改款 sDrive25i 曜夜版</td><td class="num">1</td><td class="num">¥89,800</td><td class="num">¥89,800</td><td class="num">¥89,800</td></tr><tr><td>2016年上牌 · 宝马X5 xDrive28i</td><td class="num">1</td><td class="num">¥145,000</td><td class="num">¥145,000</td><td class="num">¥145,000</td></tr><tr><td>2023年上牌 · 宝马525Li 改款二 M运动套装</td><td class="num">1</td><td class="num">¥185,000</td><td class="num">¥185,000</td><td class="num">¥185,000</td></tr><tr><td>2018年上牌 · 宝马X5 xDrive28i</td><td class="num">1</td><td class="num">¥158,000</td><td class="num">¥158,000</td><td class="num">¥158,000</td></tr><tr><td>2022年上牌 · 宝马X5 xDrive40i M运动套装</td><td class="num">1</td><td class="num">¥323,000</td><td class="num">¥323,000</td><td class="num">¥323,000</td></tr><tr><td>2023年上牌 · 宝马X5 改款xDrive30Li 尊享型M运动套装</td><td class="num">1</td><td class="num">¥338,000</td><td class="num">¥338,000</td><td class="num">¥338,000</td></tr><tr><td>2023年上牌 · 宝马X5 改款XDrive 40Li M运动套装</td><td class="num">1</td><td class="num">¥388,000</td><td class="num">¥388,000</td><td class="num">¥388,000</td></tr></table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-model3">
@@ -835,7 +839,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">-0.0万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 232.8, "0.0万", "11-10"], [277.0, 232.8, "0.0万", "11-11"], [542.0, 232.8, "0.0万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,232.8 277.0,232.8 542.0,232.8" class="line-s1"/><circle cx="12.0" cy="232.8" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-10</text><circle cx="277.0" cy="232.8" r="3.5" class="dot-s1"/><text x="277.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="232.8" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -857,7 +861,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       </table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-modely">
@@ -876,7 +880,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">-0.0万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 232.8, "0.0万", "11-10"], [277.0, 232.8, "0.0万", "11-11"], [542.0, 232.8, "0.0万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,232.8 277.0,232.8 542.0,232.8" class="line-s1"/><circle cx="12.0" cy="232.8" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-10</text><circle cx="277.0" cy="232.8" r="3.5" class="dot-s1"/><text x="277.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="232.8" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -898,7 +902,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       </table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-li_l6">
@@ -917,7 +921,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">-0.0万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 232.8, "0.0万", "11-10"], [277.0, 232.8, "0.0万", "11-11"], [542.0, 232.8, "0.0万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,232.8 277.0,232.8 542.0,232.8" class="line-s1"/><circle cx="12.0" cy="232.8" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-10</text><circle cx="277.0" cy="232.8" r="3.5" class="dot-s1"/><text x="277.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="232.8" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -939,7 +943,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       </table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-li_l7">
@@ -958,7 +962,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">-0.0万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 232.8, "0.0万", "11-10"], [277.0, 232.8, "0.0万", "11-11"], [542.0, 232.8, "0.0万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,232.8 277.0,232.8 542.0,232.8" class="line-s1"/><circle cx="12.0" cy="232.8" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-10</text><circle cx="277.0" cy="232.8" r="3.5" class="dot-s1"/><text x="277.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="232.8" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -980,7 +984,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       </table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-li_l9">
@@ -999,7 +1003,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">22.4万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">22.7万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">23.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">23.3万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">23.6万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 136.0, "23.0万", "11-10"], [277.0, 136.0, "23.0万", "11-11"], [542.0, 136.0, "23.0万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,136.0 277.0,136.0 542.0,136.0" class="line-s1"/><circle cx="12.0" cy="136.0" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-10</text><circle cx="277.0" cy="136.0" r="3.5" class="dot-s1"/><text x="277.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="136.0" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -1021,7 +1025,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       <tr><td>2023年上牌 · 理想L9 Max</td><td class="num">5</td><td class="num">¥220,000</td><td class="num">¥228,000</td><td class="num">¥245,000</td></tr><tr><td>2022年上牌 · 理想L9 Max</td><td class="num">3</td><td class="num">¥205,000</td><td class="num">¥230,000</td><td class="num">¥245,000</td></tr><tr><td>2024年上牌 · 理想L9 Pro</td><td class="num">1</td><td class="num">¥248,000</td><td class="num">¥248,000</td><td class="num">¥248,000</td></tr></table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-li_i6">
@@ -1040,7 +1044,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">-0.0万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 232.8, "0.0万", "11-11"], [542.0, 232.8, "0.0万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,232.8 542.0,232.8" class="line-s1"/><circle cx="12.0" cy="232.8" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="232.8" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -1062,7 +1066,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       </table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-li_i8">
@@ -1081,7 +1085,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">-0.0万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 232.8, "0.0万", "11-10"], [277.0, 232.8, "0.0万", "11-11"], [542.0, 232.8, "0.0万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,232.8 277.0,232.8 542.0,232.8" class="line-s1"/><circle cx="12.0" cy="232.8" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-10</text><circle cx="277.0" cy="232.8" r="3.5" class="dot-s1"/><text x="277.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="232.8" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -1103,7 +1107,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       </table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-li_i9">
@@ -1122,7 +1126,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">-0.0万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">0.0万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 232.8, "0.0万", "11-10"], [277.0, 232.8, "0.0万", "11-11"], [542.0, 232.8, "0.0万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,232.8 277.0,232.8 542.0,232.8" class="line-s1"/><circle cx="12.0" cy="232.8" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-10</text><circle cx="277.0" cy="232.8" r="3.5" class="dot-s1"/><text x="277.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="232.8" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -1144,7 +1148,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       </table></div>
 
-
+    
     </div>
     </div>
     </div><div class="view" id="view-li_mega">
@@ -1163,7 +1167,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="analysis-toggle" type="button" aria-expanded="false"><span>走势与行情分析</span></button>
     <div class="analysis-content">
     <div class="trendbox">
-
+    
     <h2>中位价走势</h2>
     <div class="card"><div class="gran gran-day active"><div class="lc" style="padding-left:58px"><svg class="lc-axis" width="58" height="300" viewBox="0 0 58 300" role="img"><text x="50.0" y="260.0" text-anchor="end" class="tick" font-size="11">38.8万</text><text x="50.0" y="200.0" text-anchor="end" class="tick" font-size="11">39.3万</text><text x="50.0" y="140.0" text-anchor="end" class="tick" font-size="11">39.8万</text><text x="50.0" y="80.0" text-anchor="end" class="tick" font-size="11">40.3万</text><text x="50.0" y="20.0" text-anchor="end" class="tick" font-size="11">40.8万</text><text x="50.0" y="10.0" text-anchor="end" class="axname" font-size="11">中位价</text></svg><div class="lc-scroll"><svg class="lc-plot linechart" width="560" height="300" viewBox="0 0 560 300" data-pts='[[12.0, 136.0, "39.8万", "11-10"], [277.0, 136.0, "39.8万", "11-11"], [542.0, 136.0, "39.8万", "11-12"]]' role="img"><line x1="12" y1="256.0" x2="542" y2="256.0" class="grid"/><line x1="12" y1="196.0" x2="542" y2="196.0" class="grid"/><line x1="12" y1="136.0" x2="542" y2="136.0" class="grid"/><line x1="12" y1="76.0" x2="542" y2="76.0" class="grid"/><line x1="12" y1="16.0" x2="542" y2="16.0" class="grid"/><polyline points="12.0,136.0 277.0,136.0 542.0,136.0" class="line-s1"/><circle cx="12.0" cy="136.0" r="3.5" class="dot-s1"/><text x="12.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-10</text><circle cx="277.0" cy="136.0" r="3.5" class="dot-s1"/><text x="277.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-11</text><circle cx="542.0" cy="136.0" r="3.5" class="dot-s1"/><text x="542.0" y="278.0" text-anchor="middle" class="tick" font-size="10">11-12</text><line class="xline" y1="16" y2="256" style="display:none"/><circle class="xdot" r="5" style="display:none"/><text class="xread" y="15" text-anchor="middle" style="display:none"></text></svg></div></div></div></div>
     <h2>在售数量走势</h2>
@@ -1185,10 +1189,10 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <th class="num">最低</th><th class="num">中位</th><th class="num">最高</th></tr>
       <tr><td>2025年上牌 · 理想MEGA Home家庭特别版</td><td class="num">1</td><td class="num">¥398,000</td><td class="num">¥398,000</td><td class="num">¥398,000</td></tr></table></div>
 
-
+    
     </div>
     </div>
-    </div><p class="foot">自动生成于 2026-11-12 04:20。聚合深圳军哥与澳康达车源；每张车辆卡片底部标注具体来源。</p></div><script>
+    </div><p class="foot">自动生成于 2026-11-12 04:23。聚合深圳军哥与澳康达车源；每张车辆卡片底部标注具体来源。</p></div><script>
 (function(){
   // 字号调节：标准/大字/超大，设置会在同源所有报告页之间保留。
   (function(){
@@ -1325,14 +1329,24 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       box.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
     });
   });
-  document.querySelectorAll('.delisted-model').forEach(function(sel){
-    sel.addEventListener('change',function(){
-      var box=sel.closest('.delisted'),value=sel.value,count=0;
-      box.querySelectorAll('tr[data-model]').forEach(function(row){
-        var show=!value||row.dataset.model===value;row.style.display=show?'':'none';if(show)count++;
+  document.querySelectorAll('.delisted-filter').forEach(function(filter){
+    var box=filter.closest('.delisted'),all=filter.querySelector('[data-delisted-all]');
+    function applyDelisted(){
+      var chosen=[];filter.querySelectorAll('[data-delisted-model].on').forEach(function(b){chosen.push(b.dataset.delistedModel);});
+      var count=0;box.querySelectorAll('tr[data-model]').forEach(function(row){
+        var show=!chosen.length||chosen.indexOf(row.dataset.model)>=0;row.style.display=show?'':'none';if(show)count++;
       });
-      var out=box.querySelector('.delisted-count');if(out)out.textContent='共 '+count+' 条';
+      var out=filter.querySelector('.delisted-count');if(out)out.textContent='共 '+count+' 条';
+    }
+    all.addEventListener('click',function(){
+      filter.querySelectorAll('[data-delisted-model].on').forEach(function(b){b.classList.remove('on');});
+      all.classList.add('on');applyDelisted();
     });
+    filter.querySelectorAll('[data-delisted-model]').forEach(function(b){b.addEventListener('click',function(){
+      b.classList.toggle('on');all.classList.remove('on');
+      if(!filter.querySelector('[data-delisted-model].on'))all.classList.add('on');
+      applyDelisted();
+    });});
   });
 
   function nfmt(v){return Number(v).toLocaleString('en-US');}
